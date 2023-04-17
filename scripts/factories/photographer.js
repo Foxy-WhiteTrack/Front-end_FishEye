@@ -16,15 +16,9 @@ function photographerFactory(data) {
             <p>${city}, ${country}</p>
             <p>${tag}</p>
             <p aria-label="${price} € par jour">${price} € par jour</p>
-        </div>`
+        </div>`;
 
-        // const img = document.createElement('img');
-        // img.setAttribute("src", picture);
-        // const h2 = document.createElement('h2');
-        // h2.textContent = name;
-        // article.appendChild(img);
-        // article.appendChild(h2);
         return (article);
     }
-    return { name, picture, getUserCardDOM }
+    return { getUserCardDOM }
 }
