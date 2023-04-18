@@ -6,6 +6,37 @@
     background-color: #FAFAFA;
     height: 300px;
     margin: 0 100px;
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px;
+    align-items: center;
+}
+
+#photograph_infos h1 {
+    color: #D3573C;
+}
+
+#photograph_infos p:nth-child(2) {
+    color: #901C1C;
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 31px;
+}
+
+#photograph_infos p:nth-child(3) {
+    color: #525252;
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.photograph-header img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .contact_button {

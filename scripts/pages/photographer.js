@@ -17,11 +17,13 @@ async function getPhotographerById(id) {
 // Fonction pour afficher les informations du photographe
 function displayPhotographerInfo(photographer) {
     console.log(photographer);
+    let photo = photographer.portrait;
+    let name = photographer.name;
     // const elfotografo = document.getElementById('photograph_infos').innerHTML = photographer.name;
     document.querySelector('#photograph_infos > h1').innerHTML = photographer.name;
     document.querySelector('#photograph_infos > p:nth-child(2)').innerHTML = photographer.city + ', ' + photographer.country;
     document.querySelector('#photograph_infos > p:nth-child(3)').innerHTML = photographer.tagline;
-
+    document.querySelector('#img_photograph').innerHTML = `<img src="assets/images/Photographers ID Photos/${photo}" alt="Photo du profil de ${name}">`;
 }
 
 // Fonction principale pour récupérer et afficher les informations du photographe
