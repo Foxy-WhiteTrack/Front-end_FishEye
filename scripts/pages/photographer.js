@@ -1,28 +1,34 @@
 //Mettre le code JavaScript lié à la page photographer.html
 
-const main = document.getElementById('main');
-const photographInfos = document.getElementById('photograph_infos');
-
-let params = new URLSearchParams(document.location.search);
-
-// Récupérer les data du photographe
-function displayData(photograph) {
-    let { name, portrait, city, country } = photograph;
-
-    const nameOfPhotograph = document.getElementById('photograph_infos').innerHTML = parseInt(params.get("id"), 10);
-
-    //console.log(params.get("id"));
-
-    // let pseudo = params.get("name"); // tilter le nom du photographe
-    //let nom = document.querySelector('#photograph_infos').appendChild(photograph.name);
-    // const location = document.querySelector('photograph_infos > p:nth-ChannelSplitterNode(2)');
+// Fonction pour récupérer l'ID du photographe à partir de l'URL
+function getPhotographerIdFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return parseInt(urlParams.get("id"));
 }
-displayData(params);
 
-// Afficher les datas dans le DOM
+// Fonction pour récupérer le photographe correspondant à l'ID
+async function getPhotographerById(id) {
+    const response = await fetch("data/photographers.json");
+    const data = await response.json();
+    const photographers = data.photographers;
+    return photographers.find(photographer => photographer.id === id);
+}
 
-// let id = parseInt(params.get("id"), 10); // tilter l'id du photographe
-// let name = params.get("name"); // tilter le nom du photographe
-// let city = params.get("city"); // tilter la ville du photographe
-// let country = params.get("country"); // tilter le pays du photographe
+// Fonction pour afficher les informations du photographe
+function displayPhotographerInfo(photographer) {
+    console.log(photographer);
+    // const elfotografo = document.getElementById('photograph_infos').innerHTML = photographer.name;
+    document.querySelector('#photograph_infos > h1').innerHTML = photographer.name;
+    document.querySelector('#photograph_infos > p:nth-child(2)').innerHTML = photographer.city + ', ' + photographer.country;
+    document.querySelector('#photograph_infos > p:nth-child(3)').innerHTML = photographer.tagline;
 
+}
+
+// Fonction principale pour récupérer et afficher les informations du photographe
+async function init() {
+    const photographerId = getPhotographerIdFromUrl();
+    const photographer = await getPhotographerById(photographerId);
+    displayPhotographerInfo(photographer);
+}
+
+init();
