@@ -39,6 +39,19 @@
     justify-content: space-between;
 }
 
+#media_container {
+    padding: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.media_obj {
+    width: 350px;
+    height: 300px;
+}
+
 .contact_button {
     font-size: 20px;
     font-weight: bold;

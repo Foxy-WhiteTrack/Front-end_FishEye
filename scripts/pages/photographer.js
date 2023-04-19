@@ -45,14 +45,14 @@ function displayMedia(photographer, media) {
             const imgPath = `assets/images/${mediaFolder}/${item.image}`;
             mediaContainer.innerHTML += `
                 <div class="media_item">
-                    <img src="${imgPath}" alt="${item.title}">
+                    <img class="media_obj" src="${imgPath}" alt="${item.title}">
                 </div>
             `;
         } else if (item.video) {
             const videoPath = `assets/images/${mediaFolder}/${item.video}`;
             mediaContainer.innerHTML += `
                 <div class="media_item">
-                    <video src="${videoPath}" controls></video>
+                    <video class="media_obj" src="${videoPath}" controls></video>
                 </div>
             `;
         }
