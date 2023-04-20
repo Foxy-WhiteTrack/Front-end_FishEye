@@ -1,0 +1,6 @@
+trouver comment demander à eslint d'ignorer l'erreur => 28:31  error    'photographerFactory' is not defined    no-undef
+
+demander à eslint de vérifier mon taf:
+    $ ./node_modules/.bin/eslint scripts --fix
+
+chercher la méthode qui permet à object-fit cover dêtre compatible sur chrome (ne pas s'attarder la dessus)
