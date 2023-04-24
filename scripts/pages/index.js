@@ -1,22 +1,22 @@
 async function getPhotographers() {
   try {
     const response = await fetch('./data/photographers.json');
-    console.log('alert hzieqsfsd zefergsdf zefzef');
     if (!response.ok) {
-      throw new Error('Error lors du chargement');
+      throw new Error('Erreur lors du chargement du fichier Json');
     }
 
     const photographers = await response.json();
 
-    return photographers;
+    return { error: false, data: photographers };
   } catch (error) {
-    // retourne le tableau vide pour permettre au script de fonctionner quand même en cas d'erreur
-    console.log("erreur retournée");
+    return { error: true, message: error.message };
   }
 }
 
-async function displayError() {
-
+function displayError(errorMessage) {
+  const errorDiv = document.createElement('div');
+  errorDiv.innerHTML = `<p id="error-container">Erreur : ${errorMessage}</p>`;
+  document.body.appendChild(errorDiv);
 }
 
 function displayData(photographers) {
@@ -30,11 +30,14 @@ function displayData(photographers) {
 }
 
 async function init() {
-  // Récupère les datas des photographes
-  const photographers = await getPhotographers();
-  console.log(photographers);
-  displayData(photographers.photographers);
+  const result = await getPhotographers();
+  console.log(result);
 
+  if (result.error) {
+    displayError(result.message);
+  } else {
+    displayData(result.data.photographers);
+  }
 }
 
 init();
