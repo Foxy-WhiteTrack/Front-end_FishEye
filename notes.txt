@@ -4,3 +4,12 @@ demander à eslint de vérifier mon taf:
     $ ./node_modules/.bin/eslint scripts --fix
 
 chercher la méthode qui permet à object-fit cover dêtre compatible sur chrome (ne pas s'attarder la dessus)
+
+Au niveau des vidéo faire en sorte que la première frame (ou autre) de la vidéo s'affiche comme image
+media factory
+
+centrer les images et les card des photographer_section
+retravailler tout le design des card pour coller à 100% à la maquette
+
+formulaire de contact
+capsule d'infos du photographe avec like total etc... (comptabiliser les likes en plus)

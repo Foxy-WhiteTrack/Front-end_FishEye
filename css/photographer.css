@@ -55,6 +55,13 @@
     object-fit: cover;
 }
 
+figure figcaption {
+    font-weight: 400;
+    font-size: 24px;
+    line-height: 31px;
+    color: #911C1C;
+}
+
 .contact_button {
     font-size: 20px;
     font-weight: bold;
@@ -120,4 +127,150 @@ form input {
     height: 68px;
     border: none;
     border-radius: 5px;
+}
+
+.lightbox__container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0 50px;
+}
+
+#filter {
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    margin: 20px 0 20px 100px;
+
+}
+
+#filter p {
+    margin-bottom: 0;
+}
+
+.custom-select {
+    position: relative;
+    left: 25px;
+}
+
+.custom-select select {
+    display: none;
+}
+
+.select-selected {
+    background-color: #901C1C;
+}
+
+.select-selected:after {
+    position: absolute;
+    content: "";
+    top: 14px;
+    right: 10px;
+    width: 0;
+    height: 0;
+    border: 6px solid transparent;
+    border-color: #fff transparent transparent transparent;
+}
+
+.select-selected.select-arrow-active:after {
+    border-color: transparent transparent #fff transparent;
+    top: 7px;
+}
+
+.select-items div,
+.select-selected {
+    color: #ffffff;
+    padding: 8px 16px;
+    border: 1px solid transparent;
+    /* border-color: transparent transparent rgba(0, 0, 0, 0.1) transparent; */
+    cursor: pointer;
+    user-select: none;
+}
+
+.select-items {
+    position: absolute;
+    background-color: #901C1C;
+    top: 100%;
+    left: 0;
+    right: 0;
+    z-index: 99;
+}
+
+.select-hide {
+    display: none;
+}
+
+.select-items div:hover,
+.same-as-selected {
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+option:nth-child(1)::after,
+option:nth-child(2)::after {
+    width: 80%;
+    height: 2px;
+    margin-left: 10%;
+    margin-block-end: 10%;
+    background-color: #ffffff;
+}
+
+#btnTitle {
+    position: absolute;
+    left: 0.5rem;
+    top: 5rem;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.total-likes-count {
+    font-size: 24px;
+    height: 68px;
+    width: 376px;
+    position: fixed;
+    bottom: 0px;
+    right: 36px;
+    background-color: #DB8876;
+    padding: 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+/* LightBox */
+
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.lightbox__content {
+    position: relative;
+    margin: 10% auto;
+    text-align: center;
+}
+
+.lightbox__img {
+    max-width: 80%;
+    max-height: 80%;
+    margin-bottom: 20px;
+}
+
+.lightbox__close {
+    position: absolute;
+    top: -40px;
+    right: 0;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
 }
