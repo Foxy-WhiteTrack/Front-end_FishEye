@@ -68,9 +68,11 @@ function displayMedia(photographer, media) {
                                         <img class="media_obj" src="${imgPath}" tabindex="0" alt="${item.title}">
                                         </a>
                                       </div>
-                                      <figcaption>${item.title}</figcaption>
-                                      <h3>${item.likes}</h3>
-                                      <div><i class="fa-solid fa-heart"></div>
+                                      <div class="infos-medias">
+                                        <figcaption>${item.title}</figcaption>
+                                        <h3>${item.likes}</h3>
+                                        <div>//<i class="fa-solid fa-heart">//</div>
+                                    </div>
                                     </figure>
                                   </article>`;
     } else if (item.video) {
@@ -82,9 +84,11 @@ function displayMedia(photographer, media) {
                     <video class="media_obj" src="${videoPath}" tabindex="0" controls></video>
                     </a>
                   </div>
-                  <figcaption>${item.title}</figcaption>
-                  <h3>${item.likes}</h3>
-                  <div><i class="fa-solid fa-heart"></div>
+                  <div class="infos-medias">
+                    <figcaption>${item.title}</figcaption>
+                    <h3>${item.likes}</h3>
+                    <div>//<i class="fa-solid fa-heart">//</div>
+                  </div>
                 </figure>
               </article>`;
     }
@@ -97,6 +101,13 @@ function checkPhotographerId(data, id) {
   return photographers.some((photographer) => photographer.id === id);
 }
 
+// Fonction pour afficher les likes 
+function displayTotalLikes(media) {
+  const totalLikes = media.reduce((acc, item) => acc + item.likes, 0);
+  document.querySelector('#total_likes').textContent = `Total likes: ${totalLikes}`;
+}
+
+
 // Fonction qui initialise les autres fonctions
 async function init() {
   const photographerId = getPhotographerIdFromUrl();
@@ -106,14 +117,19 @@ async function init() {
     const photographer = getPhotographerById(data, photographerId);
     const photographerMedia = getPhotographerMedia(data, photographerId);
 
+
+
     photographerMedia.forEach((photographer) => {
       console.log(photographer.likes);
     })
+
     displayPhotographerInfo(photographer);
     displayMedia(photographer, photographerMedia);
+    displayTotalLikes(photographerMedia);
   } else {
     window.location.href = "index.html";
   }
+
 }
 
 init();

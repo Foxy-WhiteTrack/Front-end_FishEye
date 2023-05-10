@@ -215,6 +215,12 @@ option:nth-child(2)::after {
     background-color: #ffffff;
 }
 
+.infos-medias {
+    display: flex;
+    flex-direction: row;
+    color: #901C1C;
+}
+
 #btnTitle {
     position: absolute;
     left: 0.5rem;
