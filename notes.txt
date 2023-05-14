@@ -13,3 +13,8 @@ retravailler tout le design des card pour coller à 100% à la maquette
 
 formulaire de contact
 capsule d'infos du photographe avec like total etc... (comptabiliser les likes en plus)
+
+la modal de contact doit pouvoir se fermer avec escape
+
+A la ligne 66 du fichier photographer.js (pages):
+    mettre le contenu du innerHTML dans une variable, virer le innerHTML += et utiliser la concaténation pour intégrer la données

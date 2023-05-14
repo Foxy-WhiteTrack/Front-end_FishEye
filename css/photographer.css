@@ -219,6 +219,15 @@ option:nth-child(2)::after {
     display: flex;
     flex-direction: row;
     color: #901C1C;
+    align-items: baseline;
+    justify-content: space-between;
+}
+
+.likes {
+    display: flex;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 10px;
 }
 
 #btnTitle {
