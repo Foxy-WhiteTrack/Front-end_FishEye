@@ -23,8 +23,7 @@
         <p></p>
       </div>
       <div>
-        <button class="contact_button" onclick="displayModal()"
-          aria-label="Contactez le photographe">Contactez-moi</button>
+        <button class="contact_button" onclick="displayModal()" aria-label="Contact Me">Contactez-moi</button>
       </div>
       <div id="img_photograph">
 
@@ -49,8 +48,18 @@
         <span class="lightbox__close">&times;</span>
       </div>
     </div>
-    <div id="total_likes"></div>
 
+    <div id="infos-gen">
+      <div class="photographer-gen">
+        <div id="likes-gen">
+          <div id="total_likes"></div>
+          <i class="fa-solid fa-heart"></i>
+        </div>
+        <div id="price-gen">
+          <div id="price"></div>
+        </div>
+      </div>
+    </div>
 
     <div id="contact_modal">
       <div class="modal">
@@ -73,11 +82,10 @@
         </form>
       </div>
     </div>
-    <div class="photographer-likes"></div>
   </main>
   <script type="module" src="/scripts/pages/photographer.js"></script>
-  <script src="/scripts/utils/contactForm.js"></script>
   <script src="/scripts/utils/select.js"></script>
+  <script src="/scripts/utils/contactForm.js"></script>
 </body>
 
 </html>

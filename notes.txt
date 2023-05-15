@@ -3,18 +3,30 @@ trouver comment demander à eslint d'ignorer l'erreur => 28:31  error    'photog
 demander à eslint de vérifier mon taf:
     $ ./node_modules/.bin/eslint scripts --fix
 
-chercher la méthode qui permet à object-fit cover dêtre compatible sur chrome (ne pas s'attarder la dessus)
 
-Au niveau des vidéo faire en sorte que la première frame (ou autre) de la vidéo s'affiche comme image
-media factory
-
-centrer les images et les card des photographer_section
-retravailler tout le design des card pour coller à 100% à la maquette
 
 formulaire de contact
 capsule d'infos du photographe avec like total etc... (comptabiliser les likes en plus)
 
 la modal de contact doit pouvoir se fermer avec escape
 
-A la ligne 66 du fichier photographer.js (pages):
-    mettre le contenu du innerHTML dans une variable, virer le innerHTML += et utiliser la concaténation pour intégrer la données
+-------------------------------------------------------------------------------------------
+
+Controls dans les videos uniquement dans la lightbox
+
+-------------------------------------------------------------------------------------------
+
+Continuer la page du photographe
+
+finir le design
+
+faire les likes
+clique sur le cœur
+ajout ou retire un like sur le compteur de like de l'image
+mettre à jour le total des like
+
+finir la form contact
+
+commencer le tri
+
+commencer la lightbox

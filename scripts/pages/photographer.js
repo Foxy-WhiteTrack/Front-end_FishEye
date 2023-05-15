@@ -1,23 +1,4 @@
-import { mediaFactory, displayMedia } from '../factories/media-factory.js';
-
-// // LightBox Start
-// const lightboxCtn = document.querySelector('.lightbox');
-// lightboxCtn.style.display = 'none';
-
-// const lightboxPrevBtn = document.querySelector('.lightbox__prev');
-// const lightboxNextBtn = document.querySelector('.lightbox__next');
-
-// lightboxPrevBtn.addEventListener('click', () => {
-//   currentMediaIndex = (currentMediaIndex - 1 + media.length) % media.length;
-//   updateLightboxMedia(currentMediaIndex);
-// });
-
-// lightboxNextBtn.addEventListener('click', () => {
-//   currentMediaIndex = (currentMediaIndex + 1) % media.length;
-//   updateLightboxMedia(currentMediaIndex);
-// });
-
-// //  LightBox End
+import { mediaFactory } from '../factories/media-factory.js';
 
 // Fonction pour récupérer le photographer selon l'url et son id qui est dedans
 function getPhotographerIdFromUrl() {
@@ -62,10 +43,30 @@ function checkPhotographerId(data, id) {
 }
 
 // Fonction pour afficher les likes 
-function displayTotalLikes(media) {
+function displayTotalLikes(media, photographer) {
   // reduce => fonction qui permet l'accumulation d'un nombre
   const totalLikes = media.reduce((acc, item) => acc + item.likes, 0);
-  document.querySelector('#total_likes').textContent = `Total likes: ${totalLikes}`;
+  document.querySelector('#total_likes').textContent = `${totalLikes}`;
+  const price = photographer.price;
+  console.log(price);
+  document.querySelector('#price').textContent = `${price} € / jour`;
+}
+
+// Fonction pour afficher les médias du photographe
+function displayMedia(photographer, media) {
+  const mediaContainer = document.querySelector('#media_container');
+  let mediaHtml = '';
+  console.log(media);
+
+  media.forEach((item) => {
+    const firstName = photographer.name.split(' ')[0];
+    const newFirstName = firstName.replace('-', ' ');
+    const mediaFolder = newFirstName;
+
+    mediaHtml += mediaFactory(item, mediaFolder);
+  });
+
+  mediaContainer.innerHTML = mediaHtml;
 }
 
 // Fonction qui initialise les autres fonctions
@@ -78,13 +79,15 @@ async function init() {
     const photographer = getPhotographerById(data, photographerId);
     const photographerMedia = getPhotographerMedia(data, photographerId);
 
+    console.log(photographer);
+
     // photographerMedia.forEach((photographer) => {
     //   console.log(photographer.likes);
     // })
 
     displayPhotographerInfo(photographer);
     displayMedia(photographer, photographerMedia);
-    displayTotalLikes(photographerMedia);
+    displayTotalLikes(photographerMedia, photographer);
   } else {
     // window.location.href = "index.html";
   }
