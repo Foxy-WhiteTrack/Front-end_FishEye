@@ -133,6 +133,15 @@ form input {
     border-radius: 5px;
 }
 
+#form-ctn {
+    display: none;
+}
+
+#bg-panel {
+    display: none;
+}
+
+
 .lightbox__container {
     display: flex;
     align-items: center;
@@ -278,4 +287,16 @@ ul {
     align-items: center;
     flex-direction: row;
     justify-content: space-between;
+}
+
+#bg-panel {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    background: rgba(196, 196, 196, 0.4);
 }

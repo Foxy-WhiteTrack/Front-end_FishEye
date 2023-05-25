@@ -48,11 +48,10 @@ function displayTotalLikes(media, photographer) {
   const totalLikes = media.reduce((acc, item) => acc + item.likes, 0);
   document.querySelector('#total_likes').textContent = `${totalLikes}`;
   const price = photographer.price;
-  console.log(price);
   document.querySelector('#price').textContent = `${price} € / jour`;
 }
 
-// Fonction pour afficher les médias du photographe
+// Fonction pour afficher les médias du photographe (mettre le tri d'entrée)
 function displayMedia(photographer, media) {
   const mediaContainer = document.querySelector('#media_container');
   let mediaHtml = '';
@@ -68,12 +67,14 @@ function displayMedia(photographer, media) {
 
   mediaContainer.innerHTML = mediaHtml;
 
-  // Ajoute un gestionnaire d'événement à chaque cœur
+  // gestionnaire d'événement à chaque cœur
   media.forEach((item) => {
     const likeIcon = document.getElementById(`like_${item.id}`);
     let isClicked = false;
-    likeIcon.addEventListener('click', () => {
-      if (isClicked == false) {
+
+    // gérer le clic sur le coeur
+    const handleLikeClick = () => {
+      if (!isClicked) {
         item.likes++;
         isClicked = true;
         const likesElement = document.querySelector(`#media_${item.id} .likes h3`);
@@ -94,27 +95,37 @@ function displayMedia(photographer, media) {
         likeIcon.classList.remove("fa-solid");
         likeIcon.classList.add("fa-regular");
       }
+    };
 
+    // gestionnaires d'événements pour le clavier 
+    likeIcon.addEventListener('keydown', (event) => {
+      if (event.code === "Enter") {
+        handleLikeClick();
+      }
     });
+
+    // rôle et attribut tabindex pour permettre le focus avec la touche Tab
+    likeIcon.setAttribute("role", "button");
+    likeIcon.setAttribute("tabindex", "0");
+
+    // Ajoute le gestionnaire de clic pour les interactions souris
+    likeIcon.addEventListener('click', handleLikeClick);
   });
 }
 
+
+export function displayName() {
+  document.querySelector('#name-photographe').innerHTML = photographer.name;
+}
 
 // Fonction qui initialise les autres fonctions
 async function init() {
   const photographerId = getPhotographerIdFromUrl();
   const data = await fetchData();
 
-  console.log(checkPhotographerId(data, photographerId));
   if (checkPhotographerId(data, photographerId)) {
     const photographer = getPhotographerById(data, photographerId);
     const photographerMedia = getPhotographerMedia(data, photographerId);
-
-    console.log(photographer);
-
-    // photographerMedia.forEach((photographer) => {
-    //   console.log(photographer.likes);
-    // })
 
     displayPhotographerInfo(photographer);
     displayMedia(photographer, photographerMedia);
@@ -122,6 +133,7 @@ async function init() {
   } else {
     // window.location.href = "index.html";
   }
+
 }
 
 init();

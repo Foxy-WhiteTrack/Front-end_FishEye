@@ -152,3 +152,11 @@ figure figcaption {
     line-height: 31px;
     color: #911C1C;
 
+
+
+tab + entrée pour liker au clavier
+escape pour virer la modal
+require sur les input
+
+
+clavier  => change (event déclancheur)
