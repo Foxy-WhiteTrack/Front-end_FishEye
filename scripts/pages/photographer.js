@@ -133,7 +133,6 @@ async function init() {
   } else {
     // window.location.href = "index.html";
   }
-
 }
 
 init();
