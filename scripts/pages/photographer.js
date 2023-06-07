@@ -1,5 +1,9 @@
 import { mediaFactory } from '../factories/media-factory.js';
 
+const namePhographe = document.querySelector("#namePhotograph");
+
+
+
 // Fonction pour récupérer le photographer selon l'url et son id qui est dedans
 function getPhotographerIdFromUrl() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -30,7 +34,8 @@ function displayPhotographerInfo(photographer) {
   const photo = photographer.portrait;
   const { name } = photographer;
   document.querySelector('#photograph_infos > h1').innerHTML = photographer.name;
-  document.querySelector('#photograph_infos > p:nth-child(2)').innerHTML = `${photographer.city}, ${photographer.country}`;
+  namePhographe.innerHTML = photographer.name;
+  document.querySelector('#photograph_infos > h2:nth-child(2)').innerHTML = `${photographer.city}, ${photographer.country}`;
   document.querySelector('#photograph_infos > p:nth-child(3)').innerHTML = photographer.tagline;
   document.querySelector('#img_photograph').innerHTML = `<img src="assets/images/Photographers ID Photos/${photo}" alt="Photo du profil de ${name}">`;
 }
@@ -62,7 +67,7 @@ function displayMedia(photographer, media) {
     const mediaFolder = newFirstName;
 
     const mediaElement = mediaFactory(item, mediaFolder);
-    mediaHtml += `<div id="media_${item.id}">${mediaElement}</div>`;
+    mediaHtml += `<div id="media_${item.id}" class="">${mediaElement}</div>`;
   });
 
   mediaContainer.innerHTML = mediaHtml;
@@ -131,7 +136,7 @@ async function init() {
     displayMedia(photographer, photographerMedia);
     displayTotalLikes(photographerMedia, photographer);
   } else {
-    // window.location.href = "index.html";
+    window.location.href = "index.html";
   }
 }
 
@@ -141,13 +146,14 @@ init();
 function tri() {
   const elt = document.getElementById('filter');
   elt.innerHTML = `<p>Trier par</p>
-        <div class="custom-select" style="width:200px;">
-          <select>
-            <option value="0" tabindex="0">Popularité</option>
-            <option value="1" tabindex="0">Date</option>
-            <option value="2" tabindex="0">Titre</option>
-          </select>
-        </div>`;
+  <div class="custom-select" style="width:200px;">
+    <label for="sort-select">Options de tri :</label>
+    <select id="sort-select">
+      <option value="0" tabindex="0">Popularité</option>
+      <option value="1" tabindex="0">Date</option>
+      <option value="2" tabindex="0">Titre</option>
+    </select>
+  </div>`;
   return elt;
 }
 tri();

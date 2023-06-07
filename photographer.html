@@ -19,7 +19,7 @@
     <div class="photograph-header">
       <div id="photograph_infos">
         <h1></h1>
-        <p></p>
+        <h2></h2>
         <p></p>
       </div>
       <div>
@@ -53,60 +53,56 @@
       <div id="bg-panel">
         <div class="content">
 
-          <div class="popUp">
-            <span class="close" id="btn-close"></span>
-            <div class="ifValide" id="validated">
-              <div class="confirmation" style="display:none;">
+          <div class="modal" tabindex="0">
+            <div class="modal_header">
+              <div>
+                <h2>Contactez-moi</h2>
+                <h2 id="namePhotograph"></h2>
               </div>
-              <p>Merci pour votre message</p>
-              <button id="closed">
-                Fermer
-              </button>
+              <div>
+                <img src="assets/icons/close.svg" alt="fermeture" class="close form-item" onclick="deleteForm()"
+                  tabindex="0" />
+              </div>
             </div>
+
+            <form id="form">
+              <div class="form-group">
+                <label for="first">Prénom</label>
+                <input class="text-control form-item" tabindex="0" type="text" id="first" name="first"
+                  data-error-key="name" />
+                <div class="alert" id="error-first"></div>
+              </div>
+              <div class="form-group">
+                <label for="last">Nom</label>
+                <input class="text-control form-item" tabindex="0" type="text" id="last" name="last" />
+                <div class="alert" id="error-last"></div>
+              </div>
+              <div class="form-group">
+                <label for="email">E-mail</label>
+                <input class="text-control form-item" tabindex="0" type="text" id="email" name="email" />
+                <div class="alert" id="error-email"></div>
+              </div>
+              <div class="form-group">
+                <label for="message">Votre message</label>
+                <textarea class="text-control form-item" tabindex="0" id="message" name="message" rows="10"
+                  cols="50"></textarea>
+                <div class="alert" id="error-message"></div>
+              </div>
+              <input class="contact_button close_button submit_button form-item" tabindex="0" type="submit"
+                value="Envoyer">
+            </form>
+
           </div>
 
         </div>
-      </div>
-
-      <div class="modal" tabindex="0">
-        <div class="modal_header">
-          <h2>Contactez-moi<br>Photographer Name</h2>
-          <img src="assets/icons/close.svg" alt="fermeture" class="close" onclick="deleteForm()" tabindex="0" />
-        </div>
-        <form action="#" method="POST">
-          <div class="form-group">
-            <label>Prénom</label><br>
-            <input class="text-control" type="text" id="first" name="first" data-error-key="name" /><br>
-            <div class="alert" id="error-first"></div>
-          </div>
-          <div class="form-group">
-            <label>Nom</label><br>
-            <input class="text-control" type="text" id="last" name="last" /><br>
-            <div class="alert" id="error-last"></div>
-          </div>
-          <div class="form-group">
-            <label>E-mail</label><br>
-            <input class="text-control" type="text" id="email" name="email" /><br>
-            <div class="alert" id="error-email"></div>
-          </div>
-          <div class="form-group">
-            <label>Message</label><br>
-            <input class="text-control" type="textarea" id="message" name="message" data-error-key="message" /><br>
-            <div class="alert" id="error-message"></div>
-          </div>
-          <input class="contact_button close_button" type="submit" value="Envoyer">
-
-        </form>
       </div>
 
     </div>
-
 
   </main>
   <script type="module" src="/scripts/pages/photographer.js"></script>
   <script src="/scripts/utils/select.js"></script>
   <script src="/scripts/utils/contactForm.js"></script>
-  <!-- <script src="/scripts/utils/modal.js"></script> -->
 </body>
 
 </html>

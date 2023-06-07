@@ -14,7 +14,7 @@ function photographerFactory(data) {
             <h2>${name}</h2>
         </a>
         <div aria-label="Informations concernant le photographe">
-            <p>${city}, ${country}</p>
+            <h3>${city}, ${country}</h3>
             <p>${tagline}</p>
             <p aria-label="${price} € / jour">${price} € / jour</p>
         </div>`;

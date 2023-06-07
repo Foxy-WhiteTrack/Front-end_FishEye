@@ -5,8 +5,8 @@ export function mediaFactory(item, mediaFolder) {
     const mediaHtml = `<article>
       <figure>
         <div class="media_item">
-          <a href="">
-            <img class="media_obj" src="${imgPath}" tabindex="0" alt="${item.title}" aria-label="${item.title}, closeup view">
+          <a>
+            <img class="media_obj"  src="${imgPath}" tabindex="-1" alt="${item.title}" aria-label="${item.title}, closeup view">
           </a>
         </div>
         <div class="infos-medias">
@@ -14,7 +14,7 @@ export function mediaFactory(item, mediaFolder) {
           <div class="likes">
             <h3>${item.likes}</h3>
             <div>
-              <i id="like_${item.id}" class="fa-regular fa-heart" aria-label="likes" role="button"></i>
+              <i id="like_${item.id}" tabindex="0" class="fa-regular fa-heart" aria-label="likes" role="button"></i>
             </div>
           </div>
         </div>
@@ -26,8 +26,8 @@ export function mediaFactory(item, mediaFolder) {
     const mediaHtml = `<article>
       <figure>
         <div class="media_item">
-          <a href="">
-          <video class="media_obj" src="${videoPath}" tabindex="0" aria-label="${item.title}, closeup view"></video>
+          <a>
+          <video class="media_obj" src="${videoPath}" tabindex="-1" aria-label="${item.title}, closeup view"></video>
           </a>
         </div>
         <div class="infos-medias">
@@ -35,7 +35,7 @@ export function mediaFactory(item, mediaFolder) {
           <div class="likes">
             <h3>${item.likes}</h3>
             <div>
-              <i id="like_${item.id}" class="fa-regular fa-heart" aria-label="likes" role="button"></i>
+              <i id="like_${item.id}" tabindex="0" class="fa-regular fa-heart" aria-label="likes" role="button"></i>
             </div>
           </div>
         </div>
