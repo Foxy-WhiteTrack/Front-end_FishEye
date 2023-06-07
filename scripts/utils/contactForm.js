@@ -96,6 +96,7 @@ function createForm() {
   formCtn.style.display = "block";
 
   enableModalTabOrder();
+  firstName.focus();
 }
 
 function handleKeyDown(event) {
