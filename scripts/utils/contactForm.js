@@ -11,6 +11,7 @@ const firstName = document.querySelector("#first");
 const lastName = document.querySelector("#last");
 const email = document.querySelector("#email");
 const message = document.querySelector("#message");
+const closeImg = document.querySelector("#closeImg");
 
 // Variables globales d'erreurs
 let errorOnFirst;
@@ -96,7 +97,7 @@ function createForm() {
   formCtn.style.display = "block";
 
   enableModalTabOrder();
-  firstName.focus();
+  closeImg.focus();
 }
 
 function handleKeyDown(event) {
@@ -105,6 +106,13 @@ function handleKeyDown(event) {
   }
 }
 window.addEventListener('keydown', handleKeyDown);
+
+closeImg.addEventListener('keydown', function (event) {
+  if (event.key === 'Enter') {
+    deleteForm();
+  }
+});
+
 
 function createErrorMessage(field, message) {
   const error = document.createElement('div');

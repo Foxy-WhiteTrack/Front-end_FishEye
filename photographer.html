@@ -60,8 +60,8 @@
                 <h2 id="namePhotograph"></h2>
               </div>
               <div>
-                <img src="assets/icons/close.svg" alt="fermeture" class="close form-item" onclick="deleteForm()"
-                  tabindex="0" />
+                <img src="assets/icons/close.svg" id="closeImg" alt="fermeture" class="close form-item"
+                  onclick="deleteForm()" tabindex="0" />
               </div>
             </div>
 
@@ -69,23 +69,25 @@
               <div class="form-group">
                 <label for="first">Prénom</label>
                 <input class="text-control form-item" tabindex="0" type="text" id="first" name="first"
-                  data-error-key="name" />
+                  data-error-key="name" aria-required="true" />
                 <div class="alert" id="error-first"></div>
               </div>
               <div class="form-group">
                 <label for="last">Nom</label>
-                <input class="text-control form-item" tabindex="0" type="text" id="last" name="last" />
+                <input class="text-control form-item" tabindex="0" type="text" id="last" name="last"
+                  aria-required="true" />
                 <div class="alert" id="error-last"></div>
               </div>
               <div class="form-group">
                 <label for="email">E-mail</label>
-                <input class="text-control form-item" tabindex="0" type="text" id="email" name="email" />
+                <input class="text-control form-item" tabindex="0" type="text" id="email" name="email"
+                  aria-required="true" />
                 <div class="alert" id="error-email"></div>
               </div>
               <div class="form-group">
                 <label for="message">Votre message</label>
-                <textarea class="text-control form-item" tabindex="0" id="message" name="message" rows="10"
-                  cols="50"></textarea>
+                <textarea class="text-control form-item" tabindex="0" id="message" name="message" rows="10" cols="50"
+                  aria-required="true"></textarea>
                 <div class="alert" id="error-message"></div>
               </div>
               <input class="contact_button close_button submit_button form-item" tabindex="0" type="submit"
