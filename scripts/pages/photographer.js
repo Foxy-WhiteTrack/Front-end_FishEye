@@ -165,14 +165,49 @@ async function init() {
     displayTotalLikes(photographerMedia, photographer);
 
     const sortSelect = document.getElementById('sort-select');
+
+    // Ajouter l'attribut aria-selected selon l'option sélectionnée
+    const updateAriaSelected = () => {
+      const selectedOption = sortSelect.querySelector('option[selected]');
+      if (selectedOption) {
+        selectedOption.setAttribute('aria-selected', 'true');
+      }
+    };
+
+    // mettre un écouteur d'event sur le select et mettre à jour le tri
     sortSelect.addEventListener('change', () => {
       const sortedMedia = sortMedia(photographerMedia);
       displayMedia(photographer, sortedMedia);
     });
+
+    // Selon si la flèche haut ou bas est appuyé changer de select
+    sortSelect.addEventListener('keydown', (event) => {
+      if (event.code === 'ArrowUp' || event.code === 'ArrowDown') {
+        const selectedIndex = sortSelect.selectedIndex;
+        const lastIndex = sortSelect.options.length - 1;
+
+        // Gèrer le déplacement de la sélection vers le haut et le bas avec les flèches haut/bas
+        if (event.code === 'ArrowUp' && selectedIndex > 0) {
+          sortSelect.selectedIndex = selectedIndex - 1;
+        } else if (event.code === 'ArrowDown' && selectedIndex < lastIndex) {
+          sortSelect.selectedIndex = selectedIndex + 1;
+        }
+
+        // Mettre à jour l'attribut aria-selected après le déplacement de la sélection
+        updateAriaSelected();
+      } else if (event.code === 'Enter') {
+        const sortedMedia = sortMedia(photographerMedia);
+        displayMedia(photographer, sortedMedia);
+      }
+    });
+
+    // Mettre à jour l'attribut aria-selected au chargement de la page
+    updateAriaSelected();
   } else {
     window.location.href = "index.html";
   }
 }
+
 
 
 init();
