@@ -55,21 +55,35 @@ function displayTotalLikes(media, photographer) {
 }
 
 function sortMedia(media) {
-  // récupérer la valeur du select
-  // switch selon la selection
-  // case popularité => 
-  // media.sort() qui permet de trier par pop
-  //case date =>
-  // media.sort() qui permet de trier par date
-  // case titre =>
-  // media.sort() qui permet de trier par titre
 
+  // récupérer la valeur du select
+  const sortSelect = document.getElementById('sort-select');
+  const sortBy = parseInt(sortSelect.value, 10);
+  // switch selon la selection
+  switch (sortBy) {
+    // case popularité => 
+    // media.sort() qui permet de trier par pop
+    case 0: // Trier par popularité
+      media.sort((a, b) => b.likes - a.likes);
+      break;
+    //case date =>
+    // media.sort() qui permet de trier par date
+    case 1: // Trier par date
+      media.sort((a, b) => new Date(b.date) - new Date(a.date));
+      break;
+    // case titre =>
+    // media.sort() qui permet de trier par titre
+    case 2: // Trier par titre
+      media.sort((a, b) => a.title.localeCompare(b.title));
+      break;
+    default:
+      break;
+  }
   return media;
 }
 
 // Fonction pour afficher les médias du photographe (mettre le tri d'entrée)
 function displayMedia(photographer, media) {
-
   const mediaSort = sortMedia(media);
 
   const mediaContainer = document.querySelector('#media_container');
