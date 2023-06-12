@@ -15,7 +15,7 @@
   <header>
     <a href="index.html"><img src="assets/images/logo.png" class="logo" alt="Logo FishEye" /></a>
   </header>
-  <main id="main">
+  <main id="main" aria-hidden="true">
     <div class="photograph-header">
       <div id="photograph_infos">
         <h1></h1>
@@ -31,7 +31,17 @@
         </div>
       </div>
     </div>
-    <div id="filter"></div>
+    <div id="filter">
+      <p>Trier par</p>
+      <div class="custom-select" style="width:200px;">
+        <label for="sort-select">Options de tri :</label>
+        <select id="sort-select">
+          <option value="0" tabindex="0">Popularité</option>
+          <option value="1" tabindex="0">Date</option>
+          <option value="2" tabindex="0">Titre</option>
+        </select>
+      </div>
+    </div>
     <div id="media_container">
 
     </div>
@@ -47,63 +57,61 @@
         </div>
       </div>
     </div>
+  </main>
 
-    <div id="form-ctn">
+  <div id="form-ctn" aria-hidden="false">
+    <div id="bg-panel">
+      <div class="content">
 
-      <div id="bg-panel" aria-hidden="true">
-        <div class="content">
-
-          <div class="modal" tabindex="0" role="dialog" aria-describedby="Formulaire de contact">
-            <div class="modal_header">
-              <div>
-                <h2>Contactez-moi</h2>
-                <h2 id="namePhotograph"></h2>
-              </div>
-              <div>
-                <img src="assets/icons/close.svg" id="closeImg" alt="fermeture" class="close form-item"
-                  onclick="deleteForm()" tabindex="0" />
-              </div>
+        <div class="modal" tabindex="0" role="dialog" aria-describedby="Formulaire de contact">
+          <div class="modal_header">
+            <div>
+              <h2>Contactez-moi</h2>
+              <h2 id="namePhotograph"></h2>
             </div>
-
-            <form id="form">
-              <div class="form-group">
-                <label for="first">Prénom</label>
-                <input class="text-control form-item" tabindex="0" type="text" id="first" name="first"
-                  data-error-key="name" aria-required="true" />
-                <div class="alert" id="error-first"></div>
-              </div>
-              <div class="form-group">
-                <label for="last">Nom</label>
-                <input class="text-control form-item" tabindex="0" type="text" id="last" name="last"
-                  aria-required="true" />
-                <div class="alert" id="error-last"></div>
-              </div>
-              <div class="form-group">
-                <label for="email">E-mail</label>
-                <input class="text-control form-item" tabindex="0" type="text" id="email" name="email"
-                  aria-required="true" />
-                <div class="alert" id="error-email"></div>
-              </div>
-              <div class="form-group">
-                <label for="message">Votre message</label>
-                <textarea class="text-control form-item" tabindex="0" id="message" name="message" rows="10" cols="50"
-                  aria-required="true"></textarea>
-                <div class="alert" id="error-message"></div>
-              </div>
-              <input class="contact_button close_button submit_button form-item" tabindex="0" type="submit"
-                value="Envoyer">
-            </form>
-
+            <div>
+              <img src="assets/icons/close.svg" id="closeImg" alt="fermeture" class="close form-item"
+                onclick="deleteForm()" tabindex="0" />
+            </div>
           </div>
 
-        </div>
-      </div>
+          <form id="form">
+            <div class="form-group">
+              <label for="first">Prénom</label>
+              <input class="text-control form-item" tabindex="0" type="text" id="first" name="first"
+                data-error-key="name" aria-required="true" />
+              <div class="alert" id="error-first"></div>
+            </div>
+            <div class="form-group">
+              <label for="last">Nom</label>
+              <input class="text-control form-item" tabindex="0" type="text" id="last" name="last"
+                aria-required="true" />
+              <div class="alert" id="error-last"></div>
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail</label>
+              <input class="text-control form-item" tabindex="0" type="text" id="email" name="email"
+                aria-required="true" />
+              <div class="alert" id="error-email"></div>
+            </div>
+            <div class="form-group">
+              <label for="message">Votre message</label>
+              <textarea class="text-control form-item" tabindex="0" id="message" name="message" rows="10" cols="50"
+                aria-required="true"></textarea>
+              <div class="alert" id="error-message"></div>
+            </div>
+            <input class="contact_button close_button submit_button form-item" tabindex="0" type="submit"
+              value="Envoyer">
+          </form>
 
+        </div>
+
+      </div>
     </div>
 
-  </main>
+  </div>
   <script type="module" src="/scripts/pages/photographer.js"></script>
-  <script src="/scripts/utils/select.js"></script>
+  <!-- <script src="/scripts/utils/select.js"></script> -->
   <script src="/scripts/utils/contactForm.js"></script>
 </body>
 

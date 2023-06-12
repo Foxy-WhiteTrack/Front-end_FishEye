@@ -11,7 +11,9 @@ const firstName = document.querySelector("#first");
 const lastName = document.querySelector("#last");
 const email = document.querySelector("#email");
 const message = document.querySelector("#message");
-const closeImg = document.querySelector("#closeImg");
+
+const main = document.querySelector("#main");
+
 
 // Variables globales d'erreurs
 let errorOnFirst;
@@ -78,8 +80,12 @@ function createThanks() {
 function deleteForm() {
   document.body.classList.remove('modal-open');
 
+
   background.style.display = 'none';
   formCtn.style.display = "none";
+
+  formCtn.setAttribute('aria-hidden', 'true');
+  main.setAttribute('aria-hidden', 'false');
 
   restoreDefaultTabOrder();
   reset();
@@ -87,18 +93,25 @@ function deleteForm() {
 
 function createForm() {
   reset();
+
   form.style.display = "block";
   background.style.display = 'block';
+
+  formCtn.setAttribute('aria-hidden', 'false');
+  main.setAttribute('aria-hidden', 'true');
+
+  enableModalTabOrder();
   const tabIndexed = document.querySelectorAll('.access');
   tabIndexed.forEach((tabIndex) => {
     tabIndex.setAttribute('tabindex', '-1')
   });
   document.body.classList.add('modal-open');
   formCtn.style.display = "block";
-
-  enableModalTabOrder();
+  console.log("*******");
+  const closeImg = document.querySelector("#first");
   closeImg.focus();
 }
+
 
 function handleKeyDown(event) {
   if (event.key === "Escape") {
@@ -107,7 +120,7 @@ function handleKeyDown(event) {
 }
 window.addEventListener('keydown', handleKeyDown);
 
-closeImg.addEventListener('keydown', function (event) {
+const closeImg = document.querySelector("#closeImg").addEventListener('keydown', function (event) {
   if (event.key === 'Enter') {
     deleteForm();
   }
@@ -189,7 +202,7 @@ function messCheck() {
 
   errorOnMess = false;
 
-  if (message.value === "" || message.value.length < 3) {
+  if (message.value === "" || message.value.length <= 15) {
     console.log("message pas OP");
     errorOnMess = true;
     errDivMess.innerHTML = dataError.message;
@@ -210,7 +223,9 @@ function validation() {
 
     restoreDefaultTabOrder();
 
+
     reset();
+    deleteForm();
   }
 }
 
@@ -232,6 +247,11 @@ function reset() {
   errorOnLast = true;
   errorOnEmail = true;
   errorOnMess = true;
+
+  errDivFirst.style.display = 'none';
+  errDivLast.style.display = 'none';
+  errDivEmail.style.display = 'none';
+  errDivMess.style.display = 'none';
 }
 
 

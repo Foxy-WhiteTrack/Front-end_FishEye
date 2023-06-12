@@ -2,8 +2,6 @@ import { mediaFactory } from '../factories/media-factory.js';
 
 const namePhographe = document.querySelector("#namePhotograph");
 
-
-
 // Fonction pour récupérer le photographer selon l'url et son id qui est dedans
 function getPhotographerIdFromUrl() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -56,12 +54,28 @@ function displayTotalLikes(media, photographer) {
   document.querySelector('#price').textContent = `${price} € / jour`;
 }
 
+function sortMedia(media) {
+  // récupérer la valeur du select
+  // switch selon la selection
+  // case popularité => 
+  // media.sort() qui permet de trier par pop
+  //case date =>
+  // media.sort() qui permet de trier par date
+  // case titre =>
+  // media.sort() qui permet de trier par titre
+
+  return media;
+}
+
 // Fonction pour afficher les médias du photographe (mettre le tri d'entrée)
 function displayMedia(photographer, media) {
+
+  const mediaSort = sortMedia(media);
+
   const mediaContainer = document.querySelector('#media_container');
   let mediaHtml = '';
 
-  media.forEach((item) => {
+  mediaSort.forEach((item) => {
     const firstName = photographer.name.split(' ')[0];
     const newFirstName = firstName.replace('-', ' ');
     const mediaFolder = newFirstName;
@@ -141,19 +155,3 @@ async function init() {
 }
 
 init();
-
-// fonction pour trier les éléments
-function tri() {
-  const elt = document.getElementById('filter');
-  elt.innerHTML = `<p>Trier par</p>
-  <div class="custom-select" style="width:200px;">
-    <label for="sort-select">Options de tri :</label>
-    <select id="sort-select">
-      <option value="0" tabindex="0">Popularité</option>
-      <option value="1" tabindex="0">Date</option>
-      <option value="2" tabindex="0">Titre</option>
-    </select>
-  </div>`;
-  return elt;
-}
-tri();

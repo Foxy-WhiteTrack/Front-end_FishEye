@@ -160,3 +160,16 @@ require sur les input
 
 
 clavier  => change (event déclancheur)
+arria-hidden true/false selon l'ouverture ou fermeture de modal
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------
+
+
+EFFACER LES ERREUR après validation
