@@ -163,9 +163,16 @@ async function init() {
     displayPhotographerInfo(photographer);
     displayMedia(photographer, photographerMedia);
     displayTotalLikes(photographerMedia, photographer);
+
+    const sortSelect = document.getElementById('sort-select');
+    sortSelect.addEventListener('change', () => {
+      const sortedMedia = sortMedia(photographerMedia);
+      displayMedia(photographer, sortedMedia);
+    });
   } else {
     window.location.href = "index.html";
   }
 }
+
 
 init();
