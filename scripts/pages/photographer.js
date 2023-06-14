@@ -2,6 +2,14 @@ import { mediaFactory } from '../factories/media-factory.js';
 
 const namePhographe = document.querySelector("#namePhotograph");
 
+const lightbox = document.getElementById('lightbox');
+const lightboxContainer = document.getElementById('lightbox_container');
+const lightboxCloseBtn = document.getElementById('lightbox_close');
+const lightboxNextBtn = document.getElementById('lightbox_next');
+const lightboxPrevBtn = document.getElementById('lightbox_prev');
+const mediaContainer = document.querySelector('#media_container');
+
+
 // Fonction pour récupérer le photographer selon l'url et son id qui est dedans
 function getPhotographerIdFromUrl() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -86,7 +94,6 @@ function sortMedia(media) {
 function displayMedia(photographer, media) {
   const mediaSort = sortMedia(media);
 
-  const mediaContainer = document.querySelector('#media_container');
   let mediaHtml = '';
 
   mediaSort.forEach((item) => {
@@ -150,6 +157,69 @@ function displayMedia(photographer, media) {
 export function displayName() {
   document.querySelector('#name-photographe').innerHTML = photographer.name;
 }
+
+function openLightbox(mediaId) {
+  // Récupère les informations sur le média à partir de son ID
+  const selectedMedia = photographerMedia.find((media) => media.id === mediaId);
+
+  // Crée le contenu de la lightbox avec la photo sélectionnée
+  const lightboxContent = `
+    <img src="${selectedMedia.image}" alt="${selectedMedia.title}" class="lightbox-image">
+    <figcaption>${selectedMedia.title}</figcaption>
+  `;
+
+  // Afficher le contenu dans la lightbox
+  lightboxContainer.innerHTML = lightboxContent;
+
+  // Afficher la lightbox
+  lightbox.style.display = 'block';
+
+  // Définir le focus sur la lightbox pour une meilleure accessibilité
+  lightbox.focus();
+}
+
+
+mediaContainer.addEventListener('click', (event) => {
+  if (event.target.classList.contains('media_obj')) {
+    const mediaId = event.target.dataset.mediaId;
+    openLightbox(mediaId);
+  }
+});
+
+function closeLightbox() {
+  // Masque la lightbox
+  lightbox.style.display = 'none';
+}
+
+
+lightboxCloseBtn.addEventListener('click', closeLightbox);
+
+let currentMediaIndex = 0; // Index du média actuellement affiché dans la lightbox
+
+function showNextMedia() {
+  currentMediaIndex = (currentMediaIndex + 1) % photographerMedia.length; // Incrémente l'index du média
+  displayMediaInLightbox(currentMediaIndex);
+}
+
+function showPrevMedia() {
+  currentMediaIndex = (currentMediaIndex - 1 + photographerMedia.length) % photographerMedia.length; // Décrémente l'index du média
+  displayMediaInLightbox(currentMediaIndex);
+}
+
+function displayMediaInLightbox(index) {
+  const selectedMedia = photographerMedia[index];
+  const lightboxImage = lightboxContainer.querySelector('.lightbox-image');
+  const lightboxCaption = lightboxContainer.querySelector('figcaption');
+
+  lightboxImage.src = selectedMedia.image;
+  lightboxImage.alt = selectedMedia.title;
+  lightboxCaption.textContent = selectedMedia.title;
+}
+
+lightboxNextBtn.addEventListener('click', showNextMedia);
+lightboxPrevBtn.addEventListener('click', showPrevMedia);
+
+
 
 // Fonction qui initialise les autres fonctions
 async function init() {
