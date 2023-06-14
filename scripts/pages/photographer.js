@@ -11,6 +11,8 @@ const mediaContainer = document.querySelector('#media_container');
 
 lightbox.style.display = 'none';
 
+let photographerMedia = [];
+
 // Fonction pour récupérer le photographer selon l'url et son id qui est dedans
 function getPhotographerIdFromUrl() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -155,11 +157,27 @@ function displayMedia(photographer, media) {
 }
 
 function openLightbox(mediaId) {
-  // Afficher la lightbox
-  lightbox.style.display = 'block';
-  // Définir le focus sur la lightbox pour une meilleure accessibilité
-  lightbox.focus();
+  // Récupère les informations sur le média à partir de son ID
+  const selectedMedia = photographerMedia.find((media) => media.id === mediaId);
+
+  if (selectedMedia) {
+    // Crée le contenu de la lightbox avec la photo sélectionnée
+    const lightboxContent = `
+      <img src="${selectedMedia.image}" alt="${selectedMedia.title}" class="lightbox-image">
+      <figcaption>${selectedMedia.title}</figcaption>
+    `;
+
+    // Afficher le contenu dans la lightbox
+    lightboxContainer.innerHTML = lightboxContent;
+
+    // Afficher la lightbox
+    lightbox.style.display = 'block';
+
+    // Définir le focus sur la lightbox pour une meilleure accessibilité
+    lightbox.focus();
+  }
 }
+
 
 function closeLightbox() {
   // Masque la lightbox
@@ -168,23 +186,16 @@ function closeLightbox() {
 
 mediaContainer.addEventListener('click', (event) => {
   if (event.target.classList.contains('media_obj')) {
+    const mediaId = event.target.dataset.mediaId;
+    openLightbox(mediaId);
     console.log("media clické!");
-    // const mediaId = event.target.dataset.mediaId;
-    // openLightbox(mediaId);
+    console.log(mediaId);
   }
 });
-
 
 export function displayName() {
   document.querySelector('#name-photographe').innerHTML = photographer.name;
 }
-
-mediaContainer.addEventListener('click', (event) => {
-  if (event.target.classList.contains('media_obj')) {
-    const mediaId = event.target.dataset.mediaId;
-    openLightbox(mediaId);
-  }
-});
 
 lightboxCloseBtn.addEventListener('click', closeLightbox);
 
@@ -206,6 +217,10 @@ function displayMediaInLightbox(index) {
   // détecter les image et figcaption générées par la lightbox (partie éffacée)
   const lightboxImage = lightboxContainer.querySelector('.lightbox-image');
   const lightboxCaption = lightboxContainer.querySelector('figcaption');
+
+  lightboxImage.src = selectedMedia.image;
+  lightboxImage.alt = selectedMedia.title;
+  lightboxCaption.textContent = selectedMedia.title;
 }
 
 // quand on appuie sur next ou prev lancer showNext ou showPrev
@@ -221,7 +236,7 @@ async function init() {
 
   if (checkPhotographerId(data, photographerId)) {
     const photographer = getPhotographerById(data, photographerId);
-    const photographerMedia = getPhotographerMedia(data, photographerId);
+    photographerMedia = getPhotographerMedia(data, photographerId);
 
     displayPhotographerInfo(photographer);
     displayMedia(photographer, photographerMedia);
