@@ -9,10 +9,7 @@ const lightboxNextBtn = document.getElementById('lightbox_next');
 const lightboxPrevBtn = document.getElementById('lightbox_prev');
 const mediaContainer = document.querySelector('#media_container');
 
-<<<<<<< Updated upstream
-=======
 lightbox.style.display = 'none';
->>>>>>> Stashed changes
 
 // Fonction pour récupérer le photographer selon l'url et son id qui est dedans
 function getPhotographerIdFromUrl() {
@@ -301,7 +298,5 @@ async function init() {
     window.location.href = "index.html";
   }
 }
-
-
 
 init();
