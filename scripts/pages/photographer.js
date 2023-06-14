@@ -169,8 +169,8 @@ function closeLightbox() {
 mediaContainer.addEventListener('click', (event) => {
   if (event.target.classList.contains('media_obj')) {
     console.log("media clické!");
-    const mediaId = event.target.dataset.mediaId;
-    openLightbox(mediaId);
+    // const mediaId = event.target.dataset.mediaId;
+    // openLightbox(mediaId);
   }
 });
 
