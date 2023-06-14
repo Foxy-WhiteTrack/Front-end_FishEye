@@ -9,6 +9,10 @@ const lightboxNextBtn = document.getElementById('lightbox_next');
 const lightboxPrevBtn = document.getElementById('lightbox_prev');
 const mediaContainer = document.querySelector('#media_container');
 
+<<<<<<< Updated upstream
+=======
+lightbox.style.display = 'none';
+>>>>>>> Stashed changes
 
 // Fonction pour récupérer le photographer selon l'url et son id qui est dedans
 function getPhotographerIdFromUrl() {
@@ -152,6 +156,26 @@ function displayMedia(photographer, media) {
     likeIcon.addEventListener('click', handleLikeClick);
   });
 }
+
+function openLightbox(mediaId) {
+  // Afficher la lightbox
+  lightbox.style.display = 'block';
+  // Définir le focus sur la lightbox pour une meilleure accessibilité
+  lightbox.focus();
+}
+
+function closeLightbox() {
+  // Masque la lightbox
+  lightbox.style.display = 'none';
+}
+
+mediaContainer.addEventListener('click', (event) => {
+  if (event.target.classList.contains('media_obj')) {
+    console.log("media clické!");
+    const mediaId = event.target.dataset.mediaId;
+    openLightbox(mediaId);
+  }
+});
 
 
 export function displayName() {
