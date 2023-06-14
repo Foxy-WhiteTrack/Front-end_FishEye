@@ -179,39 +179,12 @@ export function displayName() {
   document.querySelector('#name-photographe').innerHTML = photographer.name;
 }
 
-function openLightbox(mediaId) {
-  // Récupère les informations sur le média à partir de son ID
-  const selectedMedia = photographerMedia.find((media) => media.id === mediaId);
-
-  // Crée le contenu de la lightbox avec la photo sélectionnée
-  const lightboxContent = `
-    <img src="${selectedMedia.image}" alt="${selectedMedia.title}" class="lightbox-image">
-    <figcaption>${selectedMedia.title}</figcaption>
-  `;
-
-  // Afficher le contenu dans la lightbox
-  lightboxContainer.innerHTML = lightboxContent;
-
-  // Afficher la lightbox
-  lightbox.style.display = 'block';
-
-  // Définir le focus sur la lightbox pour une meilleure accessibilité
-  lightbox.focus();
-}
-
-
 mediaContainer.addEventListener('click', (event) => {
   if (event.target.classList.contains('media_obj')) {
     const mediaId = event.target.dataset.mediaId;
     openLightbox(mediaId);
   }
 });
-
-function closeLightbox() {
-  // Masque la lightbox
-  lightbox.style.display = 'none';
-}
-
 
 lightboxCloseBtn.addEventListener('click', closeLightbox);
 
@@ -228,15 +201,14 @@ function showPrevMedia() {
 }
 
 function displayMediaInLightbox(index) {
+  // lister les media dans un tableau
   const selectedMedia = photographerMedia[index];
+  // détecter les image et figcaption générées par la lightbox (partie éffacée)
   const lightboxImage = lightboxContainer.querySelector('.lightbox-image');
   const lightboxCaption = lightboxContainer.querySelector('figcaption');
-
-  lightboxImage.src = selectedMedia.image;
-  lightboxImage.alt = selectedMedia.title;
-  lightboxCaption.textContent = selectedMedia.title;
 }
 
+// quand on appuie sur next ou prev lancer showNext ou showPrev
 lightboxNextBtn.addEventListener('click', showNextMedia);
 lightboxPrevBtn.addEventListener('click', showPrevMedia);
 
