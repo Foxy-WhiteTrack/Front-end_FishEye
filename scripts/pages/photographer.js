@@ -9,7 +9,18 @@ const lightboxNextBtn = document.getElementById('lightbox_next');
 const lightboxPrevBtn = document.getElementById('lightbox_prev');
 const mediaContainer = document.querySelector('#media_container');
 
-lightbox.style.display = 'none';
+let lightboxIsOpen = false;
+
+function checkLighboxIsOpen() {
+  if (lightboxIsOpen) {
+    console.log("block");
+    lightbox.style.display = 'block';
+  } else {
+    console.log("none");
+    lightbox.style.display = 'none';
+  }
+}
+
 
 let photographerMedia = [];
 
@@ -96,6 +107,8 @@ function sortMedia(media) {
 // Fonction pour afficher les médias du photographe (mettre le tri d'entrée)
 function displayMedia(photographer, media) {
   const mediaSort = sortMedia(media);
+  console.log("mediaSort =");
+  console.log(mediaSort[3]);
 
   let mediaHtml = '';
 
@@ -157,6 +170,9 @@ function displayMedia(photographer, media) {
 }
 
 function openLightbox(mediaId) {
+  lightboxIsOpen = true;
+  console.log(lightboxIsOpen);
+  checkLighboxIsOpen();
   // Récupère les informations sur le média à partir de son ID
   const selectedMedia = photographerMedia.find((media) => media.id === mediaId);
 
@@ -178,10 +194,11 @@ function openLightbox(mediaId) {
   }
 }
 
-
 function closeLightbox() {
   // Masque la lightbox
-  lightbox.style.display = 'none';
+  lightboxIsOpen = false;
+  console.log(lightboxIsOpen);
+  checkLighboxIsOpen();
 }
 
 mediaContainer.addEventListener('click', (event) => {
@@ -189,7 +206,7 @@ mediaContainer.addEventListener('click', (event) => {
     const mediaId = event.target.dataset.mediaId;
     openLightbox(mediaId);
     console.log("media clické!");
-    console.log(mediaId);
+    // console.log(mediaId);
   }
 });
 
@@ -226,8 +243,6 @@ function displayMediaInLightbox(index) {
 // quand on appuie sur next ou prev lancer showNext ou showPrev
 lightboxNextBtn.addEventListener('click', showNextMedia);
 lightboxPrevBtn.addEventListener('click', showPrevMedia);
-
-
 
 // Fonction qui initialise les autres fonctions
 async function init() {
@@ -270,7 +285,6 @@ async function init() {
         } else if (event.code === 'ArrowDown' && selectedIndex < lastIndex) {
           sortSelect.selectedIndex = selectedIndex + 1;
         }
-
         // Mettre à jour l'attribut aria-selected après le déplacement de la sélection
         updateAriaSelected();
       } else if (event.code === 'Enter') {
