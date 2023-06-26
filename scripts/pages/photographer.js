@@ -8,19 +8,19 @@ const lightboxCloseBtn = document.getElementById('lightbox_close');
 const lightboxNextBtn = document.getElementById('lightbox_next');
 const lightboxPrevBtn = document.getElementById('lightbox_prev');
 const mediaContainer = document.querySelector('#media_container');
+const mediaImage = document.querySelector('#lightbox_image');
 
 let lightboxIsOpen = false;
 
 function checkLighboxIsOpen() {
   if (lightboxIsOpen) {
-    console.log("block");
     lightbox.style.display = 'block';
   } else {
-    console.log("none");
     lightbox.style.display = 'none';
   }
 }
 
+checkLighboxIsOpen();
 
 let photographerMedia = [];
 
@@ -173,25 +173,13 @@ function openLightbox(mediaId) {
   lightboxIsOpen = true;
   console.log(lightboxIsOpen);
   checkLighboxIsOpen();
-  // Récupère les informations sur le média à partir de son ID
-  const selectedMedia = photographerMedia.find((media) => media.id === mediaId);
+  lightbox.focus();
 
-  if (selectedMedia) {
-    // Crée le contenu de la lightbox avec la photo sélectionnée
-    const lightboxContent = `
-      <img src="${selectedMedia.image}" alt="${selectedMedia.title}" class="lightbox-image">
-      <figcaption>${selectedMedia.title}</figcaption>
-    `;
+  // Créer le contenu de la lightbox avec la photo sélectionnée
 
-    // Afficher le contenu dans la lightbox
-    lightboxContainer.innerHTML = lightboxContent;
+  // Afficher le contenu dans la lightbox
 
-    // Afficher la lightbox
-    lightbox.style.display = 'block';
-
-    // Définir le focus sur la lightbox pour une meilleure accessibilité
-    lightbox.focus();
-  }
+  // Définir le focus sur la lightbox pour une meilleure accessibilité
 }
 
 function closeLightbox() {
@@ -203,9 +191,13 @@ function closeLightbox() {
 
 mediaContainer.addEventListener('click', (event) => {
   if (event.target.classList.contains('media_obj')) {
-    const mediaId = event.target.dataset.mediaId;
+    const mediaId = event.target.id;
+    const mediaPath = event.target.src;
     openLightbox(mediaId);
-    console.log("media clické!");
+    console.log(mediaId);
+    console.log(mediaPath);
+    mediaImage.src = mediaPath;
+
     // console.log(mediaId);
   }
 });
@@ -218,6 +210,7 @@ lightboxCloseBtn.addEventListener('click', closeLightbox);
 
 let currentMediaIndex = 0; // Index du média actuellement affiché dans la lightbox
 
+// bloquer à la dernière image et ne pas revenir en arrière au premier élémment si je clique sur next au dernier éléméent
 function showNextMedia() {
   currentMediaIndex = (currentMediaIndex + 1) % photographerMedia.length; // Incrémente l'index du média
   displayMediaInLightbox(currentMediaIndex);
@@ -232,7 +225,7 @@ function displayMediaInLightbox(index) {
   // lister les media dans un tableau
   const selectedMedia = photographerMedia[index];
   // détecter les image et figcaption générées par la lightbox (partie éffacée)
-  const lightboxImage = lightboxContainer.querySelector('.lightbox-image');
+  const lightboxImage = lightboxContainer.querySelector('#lightbox_image');
   const lightboxCaption = lightboxContainer.querySelector('figcaption');
 
   lightboxImage.src = selectedMedia.image;

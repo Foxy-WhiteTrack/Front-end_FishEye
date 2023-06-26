@@ -108,19 +108,24 @@
 
       </div>
     </div>
-
   </div>
 
   <div id="lightbox" class="lightbox">
     <div class="lightbox-content">
-      <button id="lightbox_close" tabindex="0">Fermer</button>
-      <button id="lightbox_next" tabindex="0">Suivant</button>
-      <button id="lightbox_prev" tabindex="0">Précédent</button>
+      <div>
+        <button id="lightbox_prev" tabindex="0"><i class="closeLight fa-sharp fa-solid fa-angle-left"></i></button>
+      </div>
       <div id="lightbox_container">
-
+        <img id="lightbox_image" src="" alt="" class="lightbox-image">
+        <figcaption></figcaption>
+      </div>
+      <div>
+        <button id="lightbox_close" tabindex="0"><i class="closeLight fa-sharp fa-solid fa-xmark"></i></button>
+        <button id="lightbox_next" tabindex="0"><i class="closeLight fa-sharp fa-solid fa-angle-right"></i></button>
       </div>
     </div>
   </div>
+
   <script type="module" src="/scripts/pages/photographer.js"></script>
   <!-- <script src="/scripts/utils/select.js"></script> -->
   <script src="/scripts/utils/contactForm.js"></script>
