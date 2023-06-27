@@ -127,16 +127,6 @@ function displayMedia(photographer, media) {
 
   mediaContainer.innerHTML = mediaHtml;
 
-  // // boucle qui scrute tous les éléments du tableau trié
-  // for (const prod in mediaSort) {
-  //   // élément dans la lightbox (à modifié)
-  //   const lightboxImage = lightboxContainer.querySelector('#lightbox_image');
-
-  //   let lighboxIdImg = prod;
-  //   lightboxImage.dataset.id = lighboxIdImg;
-  //   console.log(lighboxIdImg);
-  // }
-
   // gestionnaire d'événement à chaque cœur
   media.forEach((item) => {
     const indexElement = item;
@@ -194,9 +184,10 @@ function openLightbox(mediaDataId, mediaSrc) {
   const currentDataId = mediaDataId;
   mediaImage.src = mediaSrc;
 
-  displayMediaInLightbox(currentDataId)
+  displayMediaInLightbox(currentDataId, photographerMedia);
 
   lightbox.focus();
+
 
 }
 
@@ -208,7 +199,11 @@ function closeLightbox() {
 
 mediaContainer.addEventListener('click', (event) => {
   if (event.target.classList.contains('media_obj')) {
-    const mediaDataId = event.target.getAttribute('data-id');
+    // transferrer la data-id à la lightbox
+    const mediaClicked = event.target;
+    const mediaDataId = mediaClicked.getAttribute('data-id');
+    mediaImage.setAttribute('data-id', mediaDataId);
+
     const mediaPath = event.target.src;
     console.log(mediaDataId);
     openLightbox(mediaDataId, mediaPath);
@@ -227,36 +222,53 @@ let currentMediaIndex = 0; // Index du média actuellement affiché dans la ligh
 
 // bloquer à la dernière image et ne pas revenir en arrière au premier élémment si je clique sur next au dernier éléméent
 function showNextMedia() {
+  const currentDataId = parseInt(mediaImage.getAttribute('data-id'), 10);
+  const nextIndex = currentDataId + 1;
 
-  console.log();
+  // Vérifie si l'index suivant dépasse la limite supérieure du tableau
+  if (nextIndex >= photographerMedia.length) {
+    return;
+  }
+
+  const nextMedia = photographerMedia[nextIndex];
+  const mediaSrc = nextMedia.image;
+  mediaImage.src = mediaSrc;
+  mediaImage.setAttribute('data-id', nextIndex);
 }
 
 function showPrevMedia() {
+  const currentDataId = parseInt(mediaImage.getAttribute('data-id'), 10);
+  const prevIndex = currentDataId - 1;
 
-  console.log();
+  // Vérifie si l'index précédent est inférieur à 0
+  if (prevIndex < 0) {
+    return;
+  }
+
+  const prevMedia = photographerMedia[prevIndex];
+  const mediaSrc = prevMedia.image;
+  mediaImage.src = mediaSrc;
+  mediaImage.setAttribute('data-id', prevIndex);
 }
 
-function displayMediaInLightbox(lightboxIndex, media) {
-  // lister les media dans un tableau
-  // const mediaSort = sortMedia(media);
-  // const selectedMedia = mediaSort[lightboxIndex];
-  // détecter les image et figcaption générées par la lightbox (partie éffacée)
-  const lightboxImage = lightboxContainer.querySelector('#lightbox_image');
-  const lightboxCaption = lightboxContainer.querySelector('figcaption');
 
-  // lightboxImage.src = selectedMedia.image;
-  // lightboxImage.alt = selectedMedia.title;
-  // lightboxCaption.textContent = selectedMedia.title;
+function displayMediaInLightbox(lightboxIndex, mediaSort) {
+  const selectedMedia = mediaSort[lightboxIndex];
+  console.log(selectedMedia);
+  // lister les media dans un tableau
+
+  let nextIndex = lightboxIndex++;
+  let prevIndex = lightboxIndex--
 
   // gestionnaires d'événements pour le clavier 
   lightboxPrevBtn.addEventListener('keydown', (event) => {
     if (event.code === "Enter") {
-      showPrevMedia();
+      showPrevMedia(mediaSort);
     }
   });
   lightboxNextBtn.addEventListener('keydown', (event) => {
     if (event.code === "Enter") {
-      showNextMedia();
+      showNextMedia(mediaSort);
     }
   });
 }
