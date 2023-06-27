@@ -127,15 +127,15 @@ function displayMedia(photographer, media) {
 
   mediaContainer.innerHTML = mediaHtml;
 
-  // boucle qui scrute tous les éléments du tableau trié
-  for (const prod in mediaSort) {
-    // élément dans la lightbox (à modifié)
-    const lightboxImage = lightboxContainer.querySelector('#lightbox_image');
+  // // boucle qui scrute tous les éléments du tableau trié
+  // for (const prod in mediaSort) {
+  //   // élément dans la lightbox (à modifié)
+  //   const lightboxImage = lightboxContainer.querySelector('#lightbox_image');
 
-    let lighboxIdImg = prod;
-    lightboxImage.dataset.id = lighboxIdImg;
-    console.log(lighboxIdImg);
-  }
+  //   let lighboxIdImg = prod;
+  //   lightboxImage.dataset.id = lighboxIdImg;
+  //   console.log(lighboxIdImg);
+  // }
 
   // gestionnaire d'événement à chaque cœur
   media.forEach((item) => {
@@ -187,16 +187,17 @@ function displayMedia(photographer, media) {
   });
 }
 
-function openLightbox(mediaId) {
+function openLightbox(mediaDataId, mediaSrc) {
   lightboxIsOpen = true;
   checkLighboxIsOpen();
+
+  const currentDataId = mediaDataId;
+  mediaImage.src = mediaSrc;
+
+  displayMediaInLightbox(currentDataId)
+
   lightbox.focus();
 
-  // Créer le contenu de la lightbox avec la photo sélectionnée
-
-  // Afficher le contenu dans la lightbox
-
-  // Définir le focus sur la lightbox pour une meilleure accessibilité
 }
 
 function closeLightbox() {
@@ -207,14 +208,12 @@ function closeLightbox() {
 
 mediaContainer.addEventListener('click', (event) => {
   if (event.target.classList.contains('media_obj')) {
-    const mediaId = event.target.id;
+    const mediaDataId = event.target.getAttribute('data-id');
     const mediaPath = event.target.src;
-    openLightbox(mediaId);
-    // console.log(mediaId);
-    // console.log(mediaPath);
-    mediaImage.src = mediaPath;
+    console.log(mediaDataId);
+    openLightbox(mediaDataId, mediaPath);
 
-    // console.log(mediaId);
+    mediaImage.src = mediaPath;
   }
 });
 
@@ -228,26 +227,26 @@ let currentMediaIndex = 0; // Index du média actuellement affiché dans la ligh
 
 // bloquer à la dernière image et ne pas revenir en arrière au premier élémment si je clique sur next au dernier éléméent
 function showNextMedia() {
-  currentMediaIndex = (currentMediaIndex + 1) % photographerMedia.length; // Incrémente l'index du média
-  displayMediaInLightbox(currentMediaIndex);
+
+  console.log();
 }
 
 function showPrevMedia() {
-  currentMediaIndex = (currentMediaIndex - 1 + photographerMedia.length) % photographerMedia.length; // Décrémente l'index du média
-  displayMediaInLightbox(currentMediaIndex);
+
+  console.log();
 }
 
-function displayMediaInLightbox(index) {
+function displayMediaInLightbox(lightboxIndex, media) {
   // lister les media dans un tableau
-  const selectedMedia = photographerMedia[index];
+  // const mediaSort = sortMedia(media);
+  // const selectedMedia = mediaSort[lightboxIndex];
   // détecter les image et figcaption générées par la lightbox (partie éffacée)
   const lightboxImage = lightboxContainer.querySelector('#lightbox_image');
   const lightboxCaption = lightboxContainer.querySelector('figcaption');
 
-  lightboxImage.src = selectedMedia.image;
-
-  lightboxImage.alt = selectedMedia.title;
-  lightboxCaption.textContent = selectedMedia.title;
+  // lightboxImage.src = selectedMedia.image;
+  // lightboxImage.alt = selectedMedia.title;
+  // lightboxCaption.textContent = selectedMedia.title;
 
   // gestionnaires d'événements pour le clavier 
   lightboxPrevBtn.addEventListener('keydown', (event) => {
