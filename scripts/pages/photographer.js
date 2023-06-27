@@ -107,24 +107,41 @@ function sortMedia(media) {
 // Fonction pour afficher les médias du photographe (mettre le tri d'entrée)
 function displayMedia(photographer, media) {
   const mediaSort = sortMedia(media);
-  console.log("mediaSort =");
-  console.log(mediaSort[3]);
+  // console.log("mediaSort =");
+  // console.log(mediaSort[3]);
 
   let mediaHtml = '';
 
-  mediaSort.forEach((item) => {
+  // item est l'élément et index l'index dans le tableau qui permettra ensuite de pécho l'index et de le mettre dans data-id
+  mediaSort.forEach((item, index) => {
     const firstName = photographer.name.split(' ')[0];
     const newFirstName = firstName.replace('-', ' ');
     const mediaFolder = newFirstName;
 
-    const mediaElement = mediaFactory(item, mediaFolder);
-    mediaHtml += `<div id="media_${item.id}" class="">${mediaElement}</div>`;
+    const mediaElement = mediaFactory(item, mediaFolder, index);
+    // l'index est récupéré et fouttu dans le data-id pour savoir sur quel élément on est
+    mediaHtml += `<div id="media_${item.id}" data-id="${index}">
+    ${mediaElement}
+    </div>`;
   });
 
   mediaContainer.innerHTML = mediaHtml;
 
+  // boucle qui scrute tous les éléments du tableau trié
+  for (const prod in mediaSort) {
+    // élément dans la lightbox (à modifié)
+    const lightboxImage = lightboxContainer.querySelector('#lightbox_image');
+
+    let lighboxIdImg = prod;
+    lightboxImage.dataset.id = lighboxIdImg;
+    console.log(lighboxIdImg);
+  }
+
   // gestionnaire d'événement à chaque cœur
   media.forEach((item) => {
+    const indexElement = item;
+    // console.log(indexElement);
+
     const likeIcon = document.getElementById(`like_${item.id}`);
     let isClicked = false;
 
@@ -166,12 +183,12 @@ function displayMedia(photographer, media) {
 
     // Ajoute le gestionnaire de clic pour les interactions souris
     likeIcon.addEventListener('click', handleLikeClick);
+
   });
 }
 
 function openLightbox(mediaId) {
   lightboxIsOpen = true;
-  console.log(lightboxIsOpen);
   checkLighboxIsOpen();
   lightbox.focus();
 
@@ -185,7 +202,6 @@ function openLightbox(mediaId) {
 function closeLightbox() {
   // Masque la lightbox
   lightboxIsOpen = false;
-  console.log(lightboxIsOpen);
   checkLighboxIsOpen();
 }
 
@@ -194,8 +210,8 @@ mediaContainer.addEventListener('click', (event) => {
     const mediaId = event.target.id;
     const mediaPath = event.target.src;
     openLightbox(mediaId);
-    console.log(mediaId);
-    console.log(mediaPath);
+    // console.log(mediaId);
+    // console.log(mediaPath);
     mediaImage.src = mediaPath;
 
     // console.log(mediaId);
@@ -229,8 +245,21 @@ function displayMediaInLightbox(index) {
   const lightboxCaption = lightboxContainer.querySelector('figcaption');
 
   lightboxImage.src = selectedMedia.image;
+
   lightboxImage.alt = selectedMedia.title;
   lightboxCaption.textContent = selectedMedia.title;
+
+  // gestionnaires d'événements pour le clavier 
+  lightboxPrevBtn.addEventListener('keydown', (event) => {
+    if (event.code === "Enter") {
+      showPrevMedia();
+    }
+  });
+  lightboxNextBtn.addEventListener('keydown', (event) => {
+    if (event.code === "Enter") {
+      showNextMedia();
+    }
+  });
 }
 
 // quand on appuie sur next ou prev lancer showNext ou showPrev
