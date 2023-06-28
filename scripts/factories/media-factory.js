@@ -6,7 +6,7 @@ export function mediaFactory(item, mediaFolder, index) {
       <figure>
         <div class="media_item">
           <a>
-            <img id="${item.id}" class="media_obj"  src="${imgPath}" data-id="${index}" tabindex="-1" alt="${item.title}" aria-label="${item.title}, closeup view">
+            <img id="${item.id}" class="media_obj"  src="${imgPath}" data-id="${index}" tabindex="0" alt="${item.title}" aria-label="${item.title}, closeup view">
           </a>
         </div>
         <div class="infos-medias">
@@ -27,7 +27,7 @@ export function mediaFactory(item, mediaFolder, index) {
       <figure>
         <div class="media_item">
           <a>
-          <video id="${item.id}" class="media_obj" src="${videoPath}" data-id="${index}" tabindex="-1" aria-label="${item.title}, closeup view"></video>
+          <video id="${item.id}" class="media_obj" src="${videoPath}" data-id="${index}" tabindex="0" aria-label="${item.title}, closeup view"></video>
           </a>
         </div>
         <div class="infos-medias">

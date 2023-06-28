@@ -10,7 +10,7 @@ const lightboxPrevBtn = document.getElementById('lightbox_prev');
 const mediaContainer = document.querySelector('#media_container');
 const mediaImage = document.querySelector('#lightbox_image');
 const mediaVideo = document.querySelector('#lightbox_video');
-const lightboxMedia = document.querySelector('#lightbox_media');
+const mediaObj = document.querySelectorAll('.media_obj');
 
 let mediaTitle = document.querySelector('#lightbox_media_title');
 
@@ -206,6 +206,23 @@ function closeLightbox() {
   checkLighboxIsOpen();
 }
 
+mediaContainer.addEventListener('keydown', (event) => {
+  if (event.code === "Enter" && event.target.classList.contains('media_obj')) {
+    // transférer la data-id à la lightbox
+    const mediaClicked = event.target;
+    const mediaDataId = mediaClicked.getAttribute('data-id');
+    mediaImage.setAttribute('data-id', mediaDataId);
+
+    const mediaPath = event.target.src;
+    console.log(mediaDataId);
+    openLightbox(mediaDataId, mediaPath, mediaPath);
+
+    mediaImage.src = mediaPath;
+  }
+});
+
+
+
 mediaContainer.addEventListener('click', (event) => {
   if (event.target.classList.contains('media_obj')) {
     // transferrer la data-id à la lightbox
@@ -260,7 +277,7 @@ async function showNextMedia(nextIndex, mediaFolder) {
     mediaVideo.style.display = 'none';
     mediaImage.style.display = 'block';
     mediaSrc = mediaFolder + nextMedia.image;
-
+    console.log("imageShowNext");
     mediaImage.src = mediaSrc;
     mediaImage.setAttribute('data-id', nextIndex);
   } else {
@@ -269,6 +286,7 @@ async function showNextMedia(nextIndex, mediaFolder) {
     mediaSrc = mediaFolder + nextMedia.video;
     mediaVideo.src = mediaSrc;
     mediaVideo.setAttribute('data-id', nextIndex);
+    console.log("videoShowNext");
   }
 
   console.log(mediaSrc);
