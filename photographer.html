@@ -112,16 +112,25 @@
 
   <div id="lightbox" class="lightbox">
     <div class="lightbox-content">
-      <div>
+      <div id="lbx_left">
+        <div></div>
         <button id="lightbox_prev" tabindex="0"><i class="closeLight fa-sharp fa-solid fa-angle-left"></i></button>
       </div>
-      <div id="lightbox_container">
-        <img id="lightbox_image" src="" alt="" class="lightbox-image">
-        <figcaption></figcaption>
+      <div id="lbx_center">
+        <div id="lightbox_media">
+          <img id="lightbox_image" src="" alt="" class="lightbox-image" controls>
+          <!-- <video src="" alt="" id="lightbox_video" class="lightbox_video"></video> -->
+          <video id="lightbox_video" controls="" height="1080" width="1920" src=""></video>
+        </div>
+        <div id="lightbox_media_title"></div>
       </div>
-      <div>
-        <button id="lightbox_close" tabindex="0"><i class="closeLight fa-sharp fa-solid fa-xmark"></i></button>
-        <button id="lightbox_next" tabindex="0"><i class="closeLight fa-sharp fa-solid fa-angle-right"></i></button>
+      <div id="lbx_right">
+        <div id="lbx_right_up">
+          <button id="lightbox_close" tabindex="0"><i class="closeLight fa-sharp fa-solid fa-xmark"></i></button>
+        </div>
+        <div id="lbx_right_down">
+          <button id="lightbox_next" tabindex="0"><i class="closeLight fa-sharp fa-solid fa-angle-right"></i></button>
+        </div>
       </div>
     </div>
   </div>

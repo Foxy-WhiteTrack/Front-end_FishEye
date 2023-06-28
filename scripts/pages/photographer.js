@@ -9,6 +9,10 @@ const lightboxNextBtn = document.getElementById('lightbox_next');
 const lightboxPrevBtn = document.getElementById('lightbox_prev');
 const mediaContainer = document.querySelector('#media_container');
 const mediaImage = document.querySelector('#lightbox_image');
+const mediaVideo = document.querySelector('#lightbox_video');
+const lightboxMedia = document.querySelector('#lightbox_media');
+
+let mediaTitle = document.querySelector('#lightbox_media_title');
 
 let lightboxIsOpen = false;
 
@@ -224,7 +228,8 @@ export function displayName() {
 function getPhotographerFolderPath(photographerName) {
   const basePath = "assets/images/";
   const sanitizedFolderName = photographerName.split(' ')[0];
-  const pathPhotographer = `${basePath}${sanitizedFolderName}/`;
+  const newFoldername = sanitizedFolderName.replace('-', ' ');
+  const pathPhotographer = `${basePath}${newFoldername}/`;
   return pathPhotographer;
 }
 
@@ -246,12 +251,28 @@ async function showNextMedia(nextIndex, mediaFolder) {
   const data = await fetchData();
   const photographerId = getPhotographerIdFromUrl();
   const photographer = getPhotographerById(data, photographerId);
-  mediaFolder = getPhotographerFolderPath(photographer.name);
-  const mediaSrc = mediaFolder + nextMedia.image;
-  console.log(mediaSrc);
-  mediaImage.src = mediaSrc;
 
-  mediaImage.setAttribute('data-id', nextIndex);
+  mediaFolder = getPhotographerFolderPath(photographer.name);
+  let mediaSrc = '';
+  mediaTitle = nextMedia.title;
+
+  if (nextMedia.image) {
+    mediaVideo.style.display = 'none';
+    mediaImage.style.display = 'block';
+    mediaSrc = mediaFolder + nextMedia.image;
+
+    mediaImage.src = mediaSrc;
+    mediaImage.setAttribute('data-id', nextIndex);
+  } else {
+    mediaImage.style.display = 'none';
+    mediaVideo.style.display = 'block';
+    mediaSrc = mediaFolder + nextMedia.video;
+    mediaVideo.src = mediaSrc;
+    mediaVideo.setAttribute('data-id', nextIndex);
+  }
+
+  console.log(mediaSrc);
+
 }
 
 async function showPrevMedia(prevIndex, mediaFolder) {
@@ -268,14 +289,26 @@ async function showPrevMedia(prevIndex, mediaFolder) {
   const photographerId = getPhotographerIdFromUrl();
   const photographer = getPhotographerById(data, photographerId);
   mediaFolder = getPhotographerFolderPath(photographer.name);
+  let mediaSrc = '';
+  let videoSrc = '';
 
-  const mediaSrc = mediaFolder + prevMedia.image;
-  console.log(mediaSrc);
+  mediaTitle = prevMedia.title;
+  if (prevMedia.image) {
+    mediaSrc = mediaFolder + prevMedia.image;
+    mediaImage.src = mediaSrc;
+    mediaImage.setAttribute('data-id', prevIndex);
+    console.log(mediaSrc);
+    mediaVideo.style.display = 'none';
+    mediaImage.style.display = 'block';
+  } else {
+    mediaVideo.style.display = 'block';
+    videoSrc = mediaFolder + prevMedia.video;
+    mediaVideo.src = videoSrc;
+    mediaVideo.setAttribute('data-id', prevIndex);
+    console.log(videoSrc);
+    mediaImage.style.display = 'none';
 
-
-
-  mediaImage.src = mediaSrc;
-  mediaImage.setAttribute('data-id', prevIndex);
+  }
 
 }
 
@@ -285,11 +318,38 @@ function displayMediaInLightbox(lightboxIndex, mediaFolder) {
   let nextIndex = lightboxIndex++;
   let prevIndex = lightboxIndex--;
 
+  // DERNIERES MODIFICATION LE 28-06 A 02H17 DU MATIN !!!!!!!!!!!!!!!!!!!!!!!!!!!
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  // Vérifier la source des media Video / Image
+  // La source ne se transfert pas comme il faut
+  // Il serait préférable de régler ça au showLightbox, Next et prev
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////////////////////////////////////////////////////////////////////////////
   const prevMedia = photographerMedia[prevIndex];
-  const prevMediaSrc = mediaFolder + prevMedia.image;
+  if (prevMedia.image) {
+    mediaImage.style.display = 'block';
+    mediaVideo.style.display = 'none';
+    const prevMediaSrc = mediaFolder + prevMedia.image;
+  } else {
+    mediaImage.style.display = 'none';
+    mediaVideo.style.display = 'block';
+    const prevMediaSrc = mediaFolder + prevMedia.video;
+  }
 
   const nextMedia = photographerMedia[nextIndex];
-  const nextMediaSrc = mediaFolder + nextMedia.image;
+  if (nextMedia.image) {
+    mediaImage.style.display = 'block';
+    mediaVideo.style.display = 'none';
+    const nextMediaSrc = mediaFolder + nextMedia.image;
+  } else {
+    mediaImage.style.display = 'none';
+    mediaVideo.style.display = 'block';
+    const nextMediaSrc = mediaFolder + nextMedia.video;
+  }
+
 
   // gestionnaires d'événements pour le clavier 
   lightboxPrevBtn.addEventListener('keydown', (event) => {

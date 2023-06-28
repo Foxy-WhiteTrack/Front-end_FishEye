@@ -223,7 +223,7 @@ export function displayName() {
 
 function getPhotographerFolderPath(photographerName) {
     const basePath = "assets/images/";
-    const sanitizedFolderName = photographerName.toLowerCase().replace(/\s/g, "-");
+    const sanitizedFolderName = photographerName.split(' ')[0];
     const pathPhotographer = `${basePath}${sanitizedFolderName}/`;
     return pathPhotographer;
 }
@@ -233,9 +233,9 @@ lightboxCloseBtn.addEventListener('click', closeLightbox);
 let currentMediaIndex = 0; // Index du média actuellement affiché dans la lightbox
 
 // bloquer à la dernière image et ne pas revenir en arrière au premier élémment si je clique sur next au dernier éléméent
-function showNextMedia() {
+async function showNextMedia(nextIndex, mediaFolder) {
     const currentDataId = parseInt(mediaImage.getAttribute('data-id'), 10);
-    const nextIndex = currentDataId + 1;
+    nextIndex = currentDataId + 1;
 
     // Vérifie si l'index suivant dépasse la limite supérieure du tableau
     if (nextIndex >= photographerMedia.length) {
@@ -243,15 +243,20 @@ function showNextMedia() {
     }
 
     const nextMedia = photographerMedia[nextIndex];
-    const mediaSrc = nextMedia.image;
+    const data = await fetchData();
+    const photographerId = getPhotographerIdFromUrl();
+    const photographer = getPhotographerById(data, photographerId);
+    mediaFolder = getPhotographerFolderPath(photographer.name);
+    const mediaSrc = mediaFolder + nextMedia.image;
+    console.log(mediaSrc);
     mediaImage.src = mediaSrc;
 
     mediaImage.setAttribute('data-id', nextIndex);
 }
 
-function showPrevMedia(prevMediaSrc) {
+async function showPrevMedia(prevIndex, mediaFolder) {
     const currentDataId = parseInt(mediaImage.getAttribute('data-id'), 10);
-    const prevIndex = currentDataId - 1;
+    prevIndex = currentDataId - 1;
 
     // Vérifie si l'index précédent est inférieur à 0
     if (prevIndex < 0) {
@@ -259,7 +264,14 @@ function showPrevMedia(prevMediaSrc) {
     }
 
     const prevMedia = photographerMedia[prevIndex];
-    const mediaSrc = prevMedia.image;
+    const data = await fetchData();
+    const photographerId = getPhotographerIdFromUrl();
+    const photographer = getPhotographerById(data, photographerId);
+    mediaFolder = getPhotographerFolderPath(photographer.name);
+
+    const mediaSrc = mediaFolder + prevMedia.image;
+    console.log(mediaSrc);
+
 
 
     mediaImage.src = mediaSrc;
@@ -282,12 +294,12 @@ function displayMediaInLightbox(lightboxIndex, mediaFolder) {
     // gestionnaires d'événements pour le clavier 
     lightboxPrevBtn.addEventListener('keydown', (event) => {
         if (event.code === "Enter") {
-            showPrevMedia(prevMediaSrc);
+            showPrevMedia(prevMediaSrc, mediaFolder);
         }
     });
     lightboxNextBtn.addEventListener('keydown', (event) => {
         if (event.code === "Enter") {
-            showNextMedia(nextMediaSrc);
+            showNextMedia(nextMediaSrc, mediaFolder);
         }
     });
 }
