@@ -1,19 +1,18 @@
-let formCtn = document.getElementById('form-ctn');
-let panel = document.getElementById('contact_modal');
-let background = document.getElementById('bg-panel');
+const formCtn = document.getElementById('form-ctn');
+const panel = document.getElementById('contact_modal');
+const background = document.getElementById('bg-panel');
 
-let close = document.querySelector('.close');
+const close = document.querySelector('.close');
 
 // Variables éléments formulaire
-const form = document.querySelector("#form");
+const form = document.querySelector('#form');
 
-const firstName = document.querySelector("#first");
-const lastName = document.querySelector("#last");
-const email = document.querySelector("#email");
-const message = document.querySelector("#message");
+const firstName = document.querySelector('#first');
+const lastName = document.querySelector('#last');
+const email = document.querySelector('#email');
+const message = document.querySelector('#message');
 
-const main = document.querySelector("#main");
-
+const main = document.querySelector('#main');
 
 // Variables globales d'erreurs
 let errorOnFirst;
@@ -25,23 +24,9 @@ const modalElements = document.querySelectorAll('.form-item');
 
 const namesForm = /^[a-zA-Z\u00C0-\u017F\- ]+$/;
 
-/*
-
-^ : Indique le début de la chaîne de caractères.
-
-[a-zA-Z\u00C0-\u017F\- ] : C'est une classe de caractères qui correspond à une lettre de l'alphabet en minuscule (a-z), en majuscule (A-Z), aux caractères accentués entre \u00C0 et \u017F (qui couvrent une large gamme de caractères accentués couramment utilisés) et au tiret (\-). L'espace ( ) est également inclus dans la classe de caractères.
-
-+ : Indique que la classe de caractères précédente peut apparaître une ou plusieurs fois, ce qui signifie que plusieurs lettres ou caractères de la classe peuvent être présents dans le prénom.
-
-$ : Indique la fin de la chaîne de caractères.
-
-*/
-
-
-
 const emailForm = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
-//tableau des erreurs dédiée
+// tableau des erreurs dédiée
 dataError = {
   empty: 'Merci de remplir ce champ',
   name: 'Veuillez entrer 2 caractères ou plus pour le champ du prénom',
@@ -50,8 +35,7 @@ dataError = {
   message: 'Veuillez entrer un message',
   fname: 'le format du prénom n\'est pas valide',
   lname: 'le format du nom n\'est pas valide',
-}
-
+};
 
 // Fonction pour activer l'ordre de tabulation personnalisé de la modal
 function enableModalTabOrder() {
@@ -71,18 +55,16 @@ function restoreDefaultTabOrder() {
   });
 }
 
-
 function createThanks() {
   const formPanel = document.getElementById('form-panel');
-  formPanel.style.display = "block";
+  formPanel.style.display = 'block';
 }
 
 function deleteForm() {
   document.body.classList.remove('modal-open');
 
-
   background.style.display = 'none';
-  formCtn.style.display = "none";
+  formCtn.style.display = 'none';
 
   formCtn.setAttribute('aria-hidden', 'true');
   main.setAttribute('aria-hidden', 'false');
@@ -94,38 +76,32 @@ function deleteForm() {
 function createForm() {
   reset();
 
-  form.style.display = "block";
+  form.style.display = 'block';
   background.style.display = 'block';
 
   formCtn.setAttribute('aria-hidden', 'false');
   main.setAttribute('aria-hidden', 'true');
 
   enableModalTabOrder();
-  const tabIndexed = document.querySelectorAll('.access');
-  tabIndexed.forEach((tabIndex) => {
-    tabIndex.setAttribute('tabindex', '-1')
-  });
   document.body.classList.add('modal-open');
-  formCtn.style.display = "block";
-  console.log("*******");
-  const closeImg = document.querySelector("#first");
+  formCtn.style.display = 'block';
+  console.log('*******');
+  const closeImg = document.querySelector('#first');
   closeImg.focus();
 }
 
-
 function handleKeyDown(event) {
-  if (event.key === "Escape") {
+  if (event.key === 'Escape') {
     deleteForm();
   }
 }
 window.addEventListener('keydown', handleKeyDown);
 
-const closeImg = document.querySelector("#closeImg").addEventListener('keydown', function (event) {
+const closeImg = document.querySelector('#closeImg').addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {
     deleteForm();
   }
 });
-
 
 function createErrorMessage(field, message) {
   const error = document.createElement('div');
@@ -135,28 +111,28 @@ function createErrorMessage(field, message) {
 }
 
 // Variables pour error
-const errDivFirst = document.querySelector("#error-first");
-const errDivLast = document.querySelector("#error-last");
-const errDivEmail = document.querySelector("#error-email");
-const errDivMess = document.querySelector("#error-message");
+const errDivFirst = document.querySelector('#error-first');
+const errDivLast = document.querySelector('#error-last');
+const errDivEmail = document.querySelector('#error-email');
+const errDivMess = document.querySelector('#error-message');
 
 // fonction pour checker le prénom
 function firstNameCheck() {
   const trimmedFirstName = firstName.value.trim();
 
   errorOnFirst = false;
-  //console.log("1", trimmedFirstName, errorOnFirst, trimmedFirstName.match(namesForm), namesForm.test(trimmedFirstName));
-  if (trimmedFirstName === "" || trimmedFirstName.length < 2) {
-    console.log("prénom pas OP, vide");
+  // console.log("1", trimmedFirstName, errorOnFirst, trimmedFirstName.match(namesForm), namesForm.test(trimmedFirstName));
+  if (trimmedFirstName === '' || trimmedFirstName.length < 2) {
+    console.log('prénom pas OP, vide');
     errorOnFirst = true;
     errDivFirst.innerHTML = dataError.empty;
   } else if (!trimmedFirstName.match(namesForm)) {
-    console.log("prénom non OP, ne match pas");
+    console.log('prénom non OP, ne match pas');
     errorOnFirst = true;
     errDivFirst.innerHTML = dataError.fname;
   }
   errDivFirst.style.display = errorOnFirst ? 'block' : 'none';
-  //console.log("2", trimmedFirstName, errorOnFirst);
+  // console.log("2", trimmedFirstName, errorOnFirst);
 }
 
 // fonction pour checker le nom
@@ -165,12 +141,12 @@ function lastNameCheck() {
 
   errorOnLast = false;
 
-  if (trimmedLastName === "" || trimmedLastName.length < 2) {
-    console.log("nom pas OP, vide");
+  if (trimmedLastName === '' || trimmedLastName.length < 2) {
+    console.log('nom pas OP, vide');
     errorOnLast = true;
     errDivLast.innerHTML = dataError.empty;
   } else if (!trimmedLastName.match(namesForm)) {
-    console.log("nom OP");
+    console.log('nom OP');
     errorOnLast = true;
     errDivFirst.innerHTML = dataError.lname;
   }
@@ -181,16 +157,16 @@ function lastNameCheck() {
 function emailCheck() {
   const trimmedEmail = email.value.trim();
 
-  if (trimmedEmail === "") {
-    console.log("mail pas OP, vide");
+  if (trimmedEmail === '') {
+    console.log('mail pas OP, vide');
     errorOnEmail = true;
     errDivEmail.innerHTML = dataError.empty;
   } else if (trimmedEmail.match(emailForm)) {
-    console.log("mail OP");
+    console.log('mail OP');
     errorOnEmail = false;
     errDivEmail.style.display = 'none';
   } else {
-    console.log("mail pas OP");
+    console.log('mail pas OP');
     errorOnEmail = true;
     errDivEmail.innerHTML = dataError.mail;
   }
@@ -199,11 +175,10 @@ function emailCheck() {
 
 // fonction pour checker le nom
 function messCheck() {
-
   errorOnMess = false;
 
-  if (message.value === "" || message.value.length <= 15) {
-    console.log("message pas OP");
+  if (message.value === '' || message.value.length <= 15) {
+    console.log('message pas OP');
     errorOnMess = true;
     errDivMess.innerHTML = dataError.message;
   }
@@ -212,17 +187,16 @@ function messCheck() {
 
 // Fonction pour valider les entrées
 function validation() {
-  console.log("test validation", errorOnFirst, errorOnLast, errorOnEmail, errorOnMess);
+  console.log('test validation', errorOnFirst, errorOnLast, errorOnEmail, errorOnMess);
   if (errorOnFirst == false && errorOnLast == false && errorOnEmail == false && errorOnMess == false) {
-    form.style.display = "none";
+    form.style.display = 'none';
 
-    console.log("Prénom:", firstName.value.trim());
-    console.log("Nom:", lastName.value.trim());
-    console.log("Email:", email.value.trim());
-    console.log("Message:", message.value.trim());
+    console.log('Prénom:', firstName.value.trim());
+    console.log('Nom:', lastName.value.trim());
+    console.log('Email:', email.value.trim());
+    console.log('Message:', message.value.trim());
 
     restoreDefaultTabOrder();
-
 
     reset();
     deleteForm();
@@ -231,7 +205,7 @@ function validation() {
 
 // Fonction pour lancer les fonction qui vont checker toutes les entrées
 function check() {
-  console.log("check");
+  console.log('check');
   firstNameCheck();
   lastNameCheck();
   emailCheck();
@@ -241,7 +215,7 @@ function check() {
 }
 
 function reset() {
-  console.log("reset");
+  console.log('reset');
   form.reset();
   errorOnFirst = true;
   errorOnLast = true;
@@ -254,9 +228,8 @@ function reset() {
   errDivMess.style.display = 'none';
 }
 
-
 // écouter le bouton submit et lancer la fonction check au clic
-form.addEventListener('submit', function (event) {
+form.addEventListener('submit', (event) => {
   event.preventDefault();
   check();
 });

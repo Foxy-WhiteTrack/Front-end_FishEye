@@ -23,7 +23,7 @@
         <p></p>
       </div>
       <div>
-        <button class="contact_button" onclick="createForm()" aria-label="Contact Me">Contactez-moi</button>
+        <button class="contact_button" onclick="createForm()" aria-label="Contactez-moi">Contactez-moi</button>
       </div>
       <div id="container_img">
         <div id="img_photograph">
@@ -35,7 +35,7 @@
     <div id="filter">
       <p>Trier par</p>
       <div class="custom-select" style="width:200px;">
-        <select id="sort-select">
+        <select id="sort-select" aria-label="Trier par">
           <option value="0" tabindex="0">Popularité</option>
           <option value="1" tabindex="0">Date</option>
           <option value="2" tabindex="0">Titre</option>
@@ -50,7 +50,7 @@
       <div class="photographer-gen">
         <div id="likes-gen">
           <div id="total_likes"></div>
-          <i class="fa-solid fa-heart"></i>
+          <em class="fa-solid fa-heart"></em>
         </div>
         <div id="price-gen">
           <div id="price"></div>
@@ -63,15 +63,15 @@
     <div id="bg-panel">
       <div class="content">
 
-        <div class="modal" tabindex="0" role="dialog" aria-describedby="Formulaire de contact">
+        <div class="modal" tabindex="0" role="dialog" aria-describedby="form-ctn">
           <div class="modal_header">
             <div>
               <h2>Contactez-moi</h2>
               <h2 id="namePhotograph"></h2>
             </div>
             <div>
-              <img src="assets/icons/close.svg" id="closeImg" alt="fermeture" class="close form-item"
-                onclick="deleteForm()" tabindex="0" />
+              <img src="assets/icons/close.svg" id="closeImg" alt="fermeture du formulaire de contact"
+                class="close form-item" onclick="deleteForm()" tabindex="0" aria-label="Fermer" />
             </div>
           </div>
 
@@ -80,25 +80,25 @@
               <label for="first">Prénom</label>
               <input class="text-control form-item" tabindex="0" type="text" id="first" name="first"
                 data-error-key="name" aria-required="true" />
-              <div class="alert" id="error-first"></div>
+              <div class="alert" id="error-first" role="alert"></div>
             </div>
             <div class="form-group">
               <label for="last">Nom</label>
               <input class="text-control form-item" tabindex="0" type="text" id="last" name="last"
                 aria-required="true" />
-              <div class="alert" id="error-last"></div>
+              <div class="alert" id="error-last" role="alert"></div>
             </div>
             <div class="form-group">
               <label for="email">E-mail</label>
               <input class="text-control form-item" tabindex="0" type="text" id="email" name="email"
                 aria-required="true" />
-              <div class="alert" id="error-email"></div>
+              <div class="alert" id="error-email" role="alert"></div>
             </div>
             <div class="form-group">
               <label for="message">Votre message</label>
               <textarea class="text-control form-item" tabindex="0" id="message" name="message" rows="10" cols="50"
                 aria-required="true"></textarea>
-              <div class="alert" id="error-message"></div>
+              <div class="alert" id="error-message" role="alert"></div>
             </div>
             <input class="contact_button close_button submit_button form-item" tabindex="0" type="submit"
               value="Envoyer">
@@ -110,33 +110,33 @@
     </div>
   </div>
 
-  <div id="lightbox" class="lightbox">
+  <div id="lightbox" class="lightbox" aria-hidden="true">
     <div class="lightbox-content">
-      <div id="lbx_left">
-        <div></div>
-        <button id="lightbox_prev" tabindex="0"><i class="closeLight fa-sharp fa-solid fa-angle-left"></i></button>
-      </div>
+
+      <button id="lightbox_prev">
+        <em id="emPrev" class="closeLight fa-sharp fa-solid fa-angle-left" tabindex="0"></em>
+        <span class="sr-only">Precedent</span>
+      </button>
+      <button id="lightbox_close">
+        <em id="emClose" class="closeLight fa-sharp fa-solid fa-xmark" tabindex="0"></em>
+        <span class="sr-only">Fermer</span>
+      </button>
+      <button id="lightbox_next">
+        <em id="emNext" class="closeLight fa-sharp fa-solid fa-angle-right" tabindex="0"></em>
+        <span class="sr-only">Suivant</span>
+      </button>
+
       <div id="lbx_center">
         <div id="lightbox_media">
-          <img id="lightbox_image" src="" alt="" class="lightbox-image lbx_media" controls>
-          <!-- <video src="" alt="" id="lightbox_video" class="lightbox_video"></video> -->
-          <video id="lightbox_video" controls="" height="1080" width="1920" src=""></video>
+          <img id="lightbox_image" src="" alt="" tabindex="0" class="lightbox-image lbx_media" controls>
+          <video id="lightbox_video" controls tabindex="0" src=""></video>
         </div>
         <div id="lightbox_media_title"></div>
-      </div>
-      <div id="lbx_right">
-        <div id="lbx_right_up">
-          <button id="lightbox_close" tabindex="0"><i class="closeLight fa-sharp fa-solid fa-xmark"></i></button>
-        </div>
-        <div id="lbx_right_down">
-          <button id="lightbox_next" tabindex="0"><i class="closeLight fa-sharp fa-solid fa-angle-right"></i></button>
-        </div>
       </div>
     </div>
   </div>
 
   <script type="module" src="/scripts/pages/photographer.js"></script>
-  <!-- <script src="/scripts/utils/select.js"></script> -->
   <script src="/scripts/utils/contactForm.js"></script>
 </body>
 

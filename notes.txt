@@ -1,175 +1,20 @@
-trouver comment demander à eslint d'ignorer l'erreur => 28:31  error    'photographerFactory' is not defined    no-undef
-
-demander à eslint de vérifier mon taf:
-    $ ./node_modules/.bin/eslint scripts --fix
-
-
-
-formulaire de contact
-capsule d'infos du photographe avec like total etc... (comptabiliser les likes en plus)
-
-la modal de contact doit pouvoir se fermer avec escape
-
--------------------------------------------------------------------------------------------
-
-Controls dans les videos uniquement dans la lightbox
-
--------------------------------------------------------------------------------------------
-
-Si l'on met un id inexistant que se passe t-il? 
-
-Continuer la page du photographe
-
-finir le design
-
-faire les likes
-clique sur le cœur
-ajout ou retire un like sur le compteur de like de l'image
-mettre à jour le total des like
-
-finir la form contact
-
-commencer le tri
-
-commencer la lightbox
-
-
------------------------------------------------------------------------------------------------
-
-/* LightBox */
-
-.lightbox {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.8);
-}
-
-.lightbox__content {
-    position: relative;
-    margin: 10% auto;
-    text-align: center;
-}
-
-.lightbox__img {
-    max-width: 80%;
-    max-height: 80%;
-    margin-bottom: 20px;
-}
-
-.lightbox__close {
-    position: absolute;
-    top: -40px;
-    right: 0;
-    color: white;
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
------------------------------------------------------------------
-
-mediaFactory.js:
-
-export function mediaFactory(item, mediaFolder) {
-  if (item.image) {
-    // Code pour les images
-    const imgPath = `assets/images/${mediaFolder}/${item.image}`;
-    const mediaHtml = `<article>
-      <figure>
-        <div class="media_item">
-          <a href="">
-            <img class="media_obj" src="${imgPath}" tabindex="0" alt="${item.title}">
-          </a>
-        </div>
-        <div class="infos-medias">
-          <figcaption>${item.title}</figcaption>
-          <h3>${item.likes}</h3>
-          <div>//<i class="fa-solid fa-heart">//</div>
-        </div>
-      </figure>
-    </article>`;
-    return mediaHtml;
-  } else if (item.video) {
-    // Code pour les vidéos
-    const videoPath = `assets/images/${mediaFolder}/${item.video}`;
-    const thumbnailPath = `assets/images/${mediaFolder}/${item.thumbnail}`;
-    const mediaHtml = `<article>
-      <figure>
-        <div class="media_item">
-          <a href="">
-            <img class="media_obj" src="${thumbnailPath}" tabindex="0" alt="${item.title}">
-            <video class="media_video" src="${videoPath}" tabindex="0" controls></video>
-          </a>
-        </div>
-        <div class="infos-medias">
-          <figcaption>${item.title}</figcaption>
-          <h3>${item.likes}</h3>
-          <div>//<i class="fa-solid fa-heart">//</div>
-        </div>
-      </figure>
-    </article>`;
-    return mediaHtml;
-  }
-}
-
-photographer.js:
-
-mediaHtml += mediaFactory(item, mediaFolder, thumbnailPath);
-
-photographer.css:
-
-.media_video {
-  display: none;
-}
-
-.media_obj {
-  display: block;
-}
-
-+++++++++++++++++
-
-document.querySelectorAll('.media_obj').forEach((image) => {
-  image.addEventListener('click', () => {
-    const video = image.nextElementSibling;
-    if (video.tagName === 'VIDEO') {
-      video.style.display = 'block';
-      video.play();
-    }
-  });
-});
-
-
-
-
-figure figcaption {
-    font-weight: 400;
-    font-size: 1.2em;
-    line-height: 31px;
-    color: #911C1C;
-
-
-
-tab + entrée pour liker au clavier
-escape pour virer la modal
-require sur les input
-
-
-clavier  => change (event déclancheur)
-arria-hidden true/false selon l'ouverture ou fermeture de modal
-
-
-
-
-
-
+1_ ouvrir git bash dans le dossier du projet
+2_ taper:
+./node_modules/.bin/eslint scripts
+3_ taper:
+./node_modules/.bin/eslint scripts --fix
 
 
 ------------------------------------------------------------------------
 
+// ^ : Indique le début de la chaîne de caractères.
 
-EFFACER LES ERREUR après validation
+// [a-zA-Z\u00C0-\u017F\- ] : C'est une classe de caractères qui correspond à une lettre de 
+// l'alphabet en minuscule (a-z), en majuscule (A-Z), aux caractères accentués entre \u00C0 et \u017F 
+// (qui couvrent une large gamme de caractères accentués couramment utilisés) et au tiret (\-). L'espace ( ) 
+// est également inclus dans la classe de caractères.
+
+// + : Indique que la classe de caractères précédente peut apparaître une ou plusieurs fois, ce qui signifie que 
+// plusieurs lettres ou caractères de la classe peuvent être présents dans le prénom.
+
+// $ : Indique la fin de la chaîne de caractères.

@@ -1,16 +1,16 @@
 import { mediaFactory } from '../factories/media-factory.js';
 
-const namePhographe = document.querySelector("#namePhotograph");
+const namePhographe = document.querySelector('#namePhotograph');
 
 const lightbox = document.getElementById('lightbox');
 const lightboxContainer = document.getElementById('lightbox_container');
-const lightboxCloseBtn = document.getElementById('lightbox_close');
-const lightboxNextBtn = document.getElementById('lightbox_next');
-const lightboxPrevBtn = document.getElementById('lightbox_prev');
 const mediaContainer = document.querySelector('#media_container');
 const mediaImage = document.querySelector('#lightbox_image');
 const mediaVideo = document.querySelector('#lightbox_video');
-const mediaObj = document.querySelectorAll('.media_obj');
+
+const emClose = document.querySelector('#emClose');
+const emPrev = document.querySelector('#emPrev');
+const emNext = document.querySelector('#emNext');
 
 let mediaTitle = document.querySelector('#lightbox_media_title');
 
@@ -47,7 +47,7 @@ function getPhotographerById(data, id) {
   return photographers.find((photographer) => photographer.id === id);
 }
 
-// fonction pour récupérer les medias du photographer 
+// fonction pour récupérer les medias du photographer
 function getPhotographerMedia(data, photographerId) {
   const { media } = data;
   return media.filter((item) => item.photographerId === photographerId);
@@ -71,28 +71,27 @@ function checkPhotographerId(data, id) {
   return photographers.some((photographer) => photographer.id === id);
 }
 
-// Fonction pour afficher les likes 
+// Fonction pour afficher les likes
 function displayTotalLikes(media, photographer) {
   // reduce => fonction qui permet l'accumulation d'un nombre
   const totalLikes = media.reduce((acc, item) => acc + item.likes, 0);
   document.querySelector('#total_likes').textContent = `${totalLikes}`;
-  const price = photographer.price;
+  const { price } = photographer;
   document.querySelector('#price').textContent = `${price} € / jour`;
 }
 
 function sortMedia(media) {
-
   // récupérer la valeur du select
   const sortSelect = document.getElementById('sort-select');
   const sortBy = parseInt(sortSelect.value, 10);
   // switch selon la selection
   switch (sortBy) {
-    // case popularité => 
+    // case popularité =>
     // media.sort() qui permet de trier par pop
     case 0: // Trier par popularité
       media.sort((a, b) => b.likes - a.likes);
       break;
-    //case date =>
+    // case date =>
     // media.sort() qui permet de trier par date
     case 1: // Trier par date
       media.sort((a, b) => new Date(b.date) - new Date(a.date));
@@ -149,8 +148,8 @@ function displayMedia(photographer, media) {
         const totalLikesElement = document.querySelector('#total_likes');
         const totalLikes = media.reduce((acc, item) => acc + item.likes, 0);
         totalLikesElement.textContent = totalLikes;
-        likeIcon.classList.remove("fa-regular");
-        likeIcon.classList.add("fa-solid");
+        likeIcon.classList.remove('fa-regular');
+        likeIcon.classList.add('fa-solid');
       } else {
         item.likes--;
         isClicked = false;
@@ -159,25 +158,24 @@ function displayMedia(photographer, media) {
         const totalLikesElement = document.querySelector('#total_likes');
         const totalLikes = media.reduce((acc, item) => acc + item.likes, 0);
         totalLikesElement.textContent = totalLikes;
-        likeIcon.classList.remove("fa-solid");
-        likeIcon.classList.add("fa-regular");
+        likeIcon.classList.remove('fa-solid');
+        likeIcon.classList.add('fa-regular');
       }
     };
 
-    // gestionnaires d'événements pour le clavier 
+    // gestionnaires d'événements pour le clavier
     likeIcon.addEventListener('keydown', (event) => {
-      if (event.code === "Enter") {
+      if (event.code === 'Enter') {
         handleLikeClick();
       }
     });
 
     // rôle et attribut tabindex pour permettre le focus avec la touche Tab
-    likeIcon.setAttribute("role", "button");
-    likeIcon.setAttribute("tabindex", "0");
+    likeIcon.setAttribute('role', 'button');
+    likeIcon.setAttribute('tabindex', '0');
 
     // Ajoute le gestionnaire de clic pour les interactions souris
     likeIcon.addEventListener('click', handleLikeClick);
-
   });
 }
 
@@ -195,19 +193,41 @@ async function openLightbox(mediaDataId, mediaSrc) {
 
   displayMediaInLightbox(currentDataId, mediaFolder);
 
-  lightbox.focus();
+  lightbox.setAttribute('aria-hidden', 'false');
 
+
+  emClose.setAttribute('aria-label', 'Fermer');
+  emPrev.setAttribute('aria-label', 'Image précédente');
+  emNext.setAttribute('aria-label', 'Image suivante');
+  emClose.setAttribute('tabindex', '1');
+  emPrev.setAttribute('tabindex', '1');
+  emNext.setAttribute('tabindex', '1');
+  emPrev.focus();
 
 }
 
 function closeLightbox() {
+
+  console.log("close!");
   // Masque la lightbox
   lightboxIsOpen = false;
   checkLighboxIsOpen();
+
+  emClose.setAttribute('aria-label', 'Fermeture du formulaire de contact');
+  emPrev.setAttribute('aria-label', 'Précédent');
+  emNext.setAttribute('aria-label', 'Suivant');
+  emClose.setAttribute('tabindex', '-1');
+  emPrev.setAttribute('tabindex', '-1');
+  emNext.setAttribute('tabindex', '-1');
+
+  document.getElementById('contact_button').focus();
+
+  lightbox.setAttribute('aria-hidden', 'true');
+  lightbox.setAttribute('tabindex', '-1');
 }
 
 mediaContainer.addEventListener('keydown', (event) => {
-  if (event.code === "Enter" && event.target.classList.contains('media_obj')) {
+  if (event.code === 'Enter' && event.target.classList.contains('media_obj')) {
     // transférer la data-id à la lightbox
     const mediaClicked = event.target;
     const mediaDataId = mediaClicked.getAttribute('data-id');
@@ -220,8 +240,6 @@ mediaContainer.addEventListener('keydown', (event) => {
     mediaImage.src = mediaPath;
   }
 });
-
-
 
 mediaContainer.addEventListener('click', (event) => {
   if (event.target.classList.contains('media_obj')) {
@@ -243,16 +261,16 @@ export function displayName() {
 }
 
 function getPhotographerFolderPath(photographerName) {
-  const basePath = "assets/images/";
+  const basePath = 'assets/images/';
   const sanitizedFolderName = photographerName.split(' ')[0];
   const newFoldername = sanitizedFolderName.replace('-', ' ');
   const pathPhotographer = `${basePath}${newFoldername}/`;
   return pathPhotographer;
 }
 
-lightboxCloseBtn.addEventListener('click', closeLightbox);
+emClose.addEventListener('click', closeLightbox);
 
-let currentMediaIndex = 0; // Index du média actuellement affiché dans la lightbox
+const currentMediaIndex = 0; // Index du média actuellement affiché dans la lightbox
 
 // bloquer à la dernière image et ne pas revenir en arrière au premier élémment si je clique sur next au dernier éléméent
 async function showNextMedia(nextIndex, mediaFolder) {
@@ -277,7 +295,7 @@ async function showNextMedia(nextIndex, mediaFolder) {
     mediaVideo.style.display = 'none';
     mediaImage.style.display = 'block';
     mediaSrc = mediaFolder + nextMedia.image;
-    console.log("imageShowNext");
+    console.log('imageShowNext');
     mediaImage.src = mediaSrc;
     mediaImage.setAttribute('data-id', nextIndex);
   } else {
@@ -286,11 +304,10 @@ async function showNextMedia(nextIndex, mediaFolder) {
     mediaSrc = mediaFolder + nextMedia.video;
     mediaVideo.src = mediaSrc;
     mediaVideo.setAttribute('data-id', nextIndex);
-    console.log("videoShowNext");
+    console.log('videoShowNext');
   }
 
   console.log(mediaSrc);
-
 }
 
 async function showPrevMedia(prevIndex, mediaFolder) {
@@ -325,27 +342,15 @@ async function showPrevMedia(prevIndex, mediaFolder) {
     mediaVideo.setAttribute('data-id', prevIndex);
     console.log(videoSrc);
     mediaImage.style.display = 'none';
-
   }
-
 }
 
 function displayMediaInLightbox(lightboxIndex, mediaFolder) {
   // lister les media dans un tableau
 
-  let nextIndex = lightboxIndex++;
-  let prevIndex = lightboxIndex--;
+  const nextIndex = lightboxIndex++;
+  const prevIndex = lightboxIndex--;
 
-  // DERNIERES MODIFICATION LE 28-06 A 02H17 DU MATIN !!!!!!!!!!!!!!!!!!!!!!!!!!!
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////
-  // Vérifier la source des media Video / Image
-  // La source ne se transfert pas comme il faut
-  // Il serait préférable de régler ça au showLightbox, Next et prev
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////
-  ///////////////////////////////////////////////////////////////////////////////////////////////////////
   const prevMedia = photographerMedia[prevIndex];
   if (prevMedia.image) {
     mediaImage.style.display = 'block';
@@ -368,23 +373,29 @@ function displayMediaInLightbox(lightboxIndex, mediaFolder) {
     const nextMediaSrc = mediaFolder + nextMedia.video;
   }
 
-
-  // gestionnaires d'événements pour le clavier 
-  lightboxPrevBtn.addEventListener('keydown', (event) => {
-    if (event.code === "Enter") {
-      showPrevMedia(prevMediaSrc, mediaFolder);
-    }
-  });
-  lightboxNextBtn.addEventListener('keydown', (event) => {
-    if (event.code === "Enter") {
-      showNextMedia(nextMediaSrc, mediaFolder);
-    }
-  });
 }
 
+emClose.addEventListener('keydown', (event) => {
+  if (event.code === 'Enter') {
+    closeLightbox();
+  }
+});
+
+emPrev.addEventListener('keydown', (event) => {
+  if (event.code === 'Enter') {
+    showPrevMedia();
+  }
+});
+
+emNext.addEventListener('keydown', (event) => {
+  if (event.code === 'Enter') {
+    showNextMedia();
+  }
+});
+
 // quand on appuie sur next ou prev lancer showNext ou showPrev
-lightboxNextBtn.addEventListener('click', showNextMedia);
-lightboxPrevBtn.addEventListener('click', showPrevMedia);
+emNext.addEventListener('click', showNextMedia);
+emPrev.addEventListener('click', showPrevMedia);
 
 // Fonction qui initialise les autres fonctions
 async function init() {
@@ -419,7 +430,7 @@ async function init() {
     // Selon si la flèche haut ou bas est appuyé changer de select
     sortSelect.addEventListener('keydown', (event) => {
       if (event.code === 'ArrowUp' || event.code === 'ArrowDown') {
-        const selectedIndex = sortSelect.selectedIndex;
+        const { selectedIndex } = sortSelect;
         const lastIndex = sortSelect.options.length - 1;
 
         // Gèrer le déplacement de la sélection vers le haut et le bas avec les flèches haut/bas
@@ -439,7 +450,7 @@ async function init() {
     // Mettre à jour l'attribut aria-selected au chargement de la page
     updateAriaSelected();
   } else {
-    window.location.href = "index.html";
+    window.location.href = 'index.html';
   }
 }
 

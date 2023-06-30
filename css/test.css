@@ -448,28 +448,23 @@ canvas {
     border: none;
     background-color: transparent;
     color: #901C1C;
-    width: 100px;
     top: 0;
     height: 100%;
     position: fixed;
     margin-left: 100px;
     margin-right: 100px;
-    z-index: 11;
+    z-index: -10;
     font-size: 44px;
 }
 
 #lightbox_next {
     right: 0;
     left: auto;
-    height: 50%;
-    top: 25%;
 }
 
 #lightbox_prev {
     right: auto;
     left: 0;
-    height: 50%;
-    top: 25%;
 }
 
 #lightbox_close {
@@ -478,4 +473,10 @@ canvas {
     display: flex;
     flex-direction: column;
     top: 6%;
+}
+
+#emClose,
+#emPrev,
+#emNext {
+    z-index: 100;
 }

@@ -14,14 +14,14 @@ export function mediaFactory(item, mediaFolder, index) {
           <div class="likes">
             <h3>${item.likes}</h3>
             <div>
-              <i id="like_${item.id}" tabindex="0" class="fa-regular fa-heart" aria-label="likes" role="button"></i>
+              <i id="like_${item.id}" tabindex="0" class="fa-regular fa-heart" aria-label="likes" role="button"></i >
             </div>
           </div>
         </div>
       </figure>
     </article>`;
     return mediaHtml;
-  } else if (item.video) {
+  } if (item.video) {
     const videoPath = `assets/images/${mediaFolder}/${item.video}`;
     const mediaHtml = `<article>
       <figure>
@@ -35,7 +35,7 @@ export function mediaFactory(item, mediaFolder, index) {
           <div class="likes">
             <h3>${item.likes}</h3>
             <div>
-              <i id="like_${item.id}" tabindex="0" class="fa-regular fa-heart" aria-label="likes" role="button"></i>
+              <i id="like_${item.id}" tabindex="0" class="fa-regular fa-heart" aria-label="likes" role="button"></i >
             </div>
           </div>
         </div>
