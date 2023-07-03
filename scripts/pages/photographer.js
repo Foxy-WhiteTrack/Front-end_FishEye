@@ -308,6 +308,25 @@ async function showNextMedia(nextIndex, mediaFolder) {
   }
 
   console.log(mediaSrc);
+  colorArrow();
+}
+
+function colorArrow() {
+  const currentDataId = parseInt(mediaImage.getAttribute('data-id'), 10);
+  console.log(currentDataId);
+  if (currentDataId <= 1) {
+    console.log("plus petit que 1");
+    emPrev.style.color = "#901c1c48";
+  } else {
+    emPrev.style.color = "#901C1C";
+  }
+  if (currentDataId == photographerMedia.length - 1) {
+    console.log("plus grand que le tableau");
+    emNext.style.color = "#901c1c48";
+  } else {
+    emNext.style.color = "#901C1C";
+  }
+
 }
 
 async function showPrevMedia(prevIndex, mediaFolder) {
@@ -343,6 +362,7 @@ async function showPrevMedia(prevIndex, mediaFolder) {
     console.log(videoSrc);
     mediaImage.style.display = 'none';
   }
+  colorArrow();
 }
 
 function displayMediaInLightbox(lightboxIndex, mediaFolder) {

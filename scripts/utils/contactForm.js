@@ -40,7 +40,6 @@ dataError = {
 // Fonction pour activer l'ordre de tabulation personnalisé de la modal
 function enableModalTabOrder() {
   const modalElements = document.querySelectorAll('.form-item');
-  console.log(modalElements);
   modalElements.forEach((element) => {
     element.setAttribute('tabindex', '3');
   });
@@ -49,7 +48,6 @@ function enableModalTabOrder() {
 // Fonction pour rétablir l'ordre de tabulation normal
 function restoreDefaultTabOrder() {
   const modalElements = document.querySelectorAll('.form-item');
-  console.log(modalElements);
   modalElements.forEach((element) => {
     element.setAttribute('tabindex', '0');
   });
@@ -85,7 +83,6 @@ function createForm() {
   enableModalTabOrder();
   document.body.classList.add('modal-open');
   formCtn.style.display = 'block';
-  console.log('*******');
   const closeImg = document.querySelector('#first');
   closeImg.focus();
 }
@@ -121,18 +118,14 @@ function firstNameCheck() {
   const trimmedFirstName = firstName.value.trim();
 
   errorOnFirst = false;
-  // console.log("1", trimmedFirstName, errorOnFirst, trimmedFirstName.match(namesForm), namesForm.test(trimmedFirstName));
   if (trimmedFirstName === '' || trimmedFirstName.length < 2) {
-    console.log('prénom pas OP, vide');
     errorOnFirst = true;
     errDivFirst.innerHTML = dataError.empty;
   } else if (!trimmedFirstName.match(namesForm)) {
-    console.log('prénom non OP, ne match pas');
     errorOnFirst = true;
     errDivFirst.innerHTML = dataError.fname;
   }
   errDivFirst.style.display = errorOnFirst ? 'block' : 'none';
-  // console.log("2", trimmedFirstName, errorOnFirst);
 }
 
 // fonction pour checker le nom
@@ -142,11 +135,9 @@ function lastNameCheck() {
   errorOnLast = false;
 
   if (trimmedLastName === '' || trimmedLastName.length < 2) {
-    console.log('nom pas OP, vide');
     errorOnLast = true;
     errDivLast.innerHTML = dataError.empty;
   } else if (!trimmedLastName.match(namesForm)) {
-    console.log('nom OP');
     errorOnLast = true;
     errDivFirst.innerHTML = dataError.lname;
   }
@@ -158,15 +149,12 @@ function emailCheck() {
   const trimmedEmail = email.value.trim();
 
   if (trimmedEmail === '') {
-    console.log('mail pas OP, vide');
     errorOnEmail = true;
     errDivEmail.innerHTML = dataError.empty;
   } else if (trimmedEmail.match(emailForm)) {
-    console.log('mail OP');
     errorOnEmail = false;
     errDivEmail.style.display = 'none';
   } else {
-    console.log('mail pas OP');
     errorOnEmail = true;
     errDivEmail.innerHTML = dataError.mail;
   }
@@ -178,7 +166,6 @@ function messCheck() {
   errorOnMess = false;
 
   if (message.value === '' || message.value.length <= 15) {
-    console.log('message pas OP');
     errorOnMess = true;
     errDivMess.innerHTML = dataError.message;
   }
@@ -187,7 +174,6 @@ function messCheck() {
 
 // Fonction pour valider les entrées
 function validation() {
-  console.log('test validation', errorOnFirst, errorOnLast, errorOnEmail, errorOnMess);
   if (errorOnFirst == false && errorOnLast == false && errorOnEmail == false && errorOnMess == false) {
     form.style.display = 'none';
 
@@ -205,7 +191,6 @@ function validation() {
 
 // Fonction pour lancer les fonction qui vont checker toutes les entrées
 function check() {
-  console.log('check');
   firstNameCheck();
   lastNameCheck();
   emailCheck();
@@ -215,7 +200,6 @@ function check() {
 }
 
 function reset() {
-  console.log('reset');
   form.reset();
   errorOnFirst = true;
   errorOnLast = true;

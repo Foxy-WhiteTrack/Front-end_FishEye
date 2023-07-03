@@ -385,11 +385,13 @@ canvas {
     width: 90%;
     height: 90%;
     display: flex;
+    justify-content: center;
 }
 
 #lightbox_image,
 #lightbox_video {
-    width: 90%;
+    width: 700px;
+    height: 550px;
     margin-left: 5%;
     margin-right: 5%;
     object-fit: cover;

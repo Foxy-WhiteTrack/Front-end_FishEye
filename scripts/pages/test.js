@@ -4,11 +4,15 @@ const namePhographe = document.querySelector('#namePhotograph');
 
 const lightbox = document.getElementById('lightbox');
 const lightboxContainer = document.getElementById('lightbox_container');
-const lightboxCloseBtn = document.getElementById('lightbox_close');
-const lightboxNextBtn = document.getElementById('lightbox_next');
-const lightboxPrevBtn = document.getElementById('lightbox_prev');
 const mediaContainer = document.querySelector('#media_container');
 const mediaImage = document.querySelector('#lightbox_image');
+const mediaVideo = document.querySelector('#lightbox_video');
+
+const emClose = document.querySelector('#emClose');
+const emPrev = document.querySelector('#emPrev');
+const emNext = document.querySelector('#emNext');
+
+let mediaTitle = document.querySelector('#lightbox_media_title');
 
 let lightboxIsOpen = false;
 
@@ -87,13 +91,13 @@ function sortMedia(media) {
     case 0: // Trier par popularité
       media.sort((a, b) => b.likes - a.likes);
       break;
-      // case date =>
-      // media.sort() qui permet de trier par date
+    // case date =>
+    // media.sort() qui permet de trier par date
     case 1: // Trier par date
       media.sort((a, b) => new Date(b.date) - new Date(a.date));
       break;
-      // case titre =>
-      // media.sort() qui permet de trier par titre
+    // case titre =>
+    // media.sort() qui permet de trier par titre
     case 2: // Trier par titre
       media.sort((a, b) => a.title.localeCompare(b.title));
       break;
@@ -189,14 +193,53 @@ async function openLightbox(mediaDataId, mediaSrc) {
 
   displayMediaInLightbox(currentDataId, mediaFolder);
 
-  lightbox.focus();
+  lightbox.setAttribute('aria-hidden', 'false');
+
+
+  emClose.setAttribute('aria-label', 'Fermer');
+  emPrev.setAttribute('aria-label', 'Image précédente');
+  emNext.setAttribute('aria-label', 'Image suivante');
+  emClose.setAttribute('tabindex', '1');
+  emPrev.setAttribute('tabindex', '1');
+  emNext.setAttribute('tabindex', '1');
+  emPrev.focus();
+
 }
 
 function closeLightbox() {
+
+  console.log("close!");
   // Masque la lightbox
   lightboxIsOpen = false;
   checkLighboxIsOpen();
+
+  emClose.setAttribute('aria-label', 'Fermeture du formulaire de contact');
+  emPrev.setAttribute('aria-label', 'Précédent');
+  emNext.setAttribute('aria-label', 'Suivant');
+  emClose.setAttribute('tabindex', '-1');
+  emPrev.setAttribute('tabindex', '-1');
+  emNext.setAttribute('tabindex', '-1');
+
+  document.getElementById('contact_button').focus();
+
+  lightbox.setAttribute('aria-hidden', 'true');
+  lightbox.setAttribute('tabindex', '-1');
 }
+
+mediaContainer.addEventListener('keydown', (event) => {
+  if (event.code === 'Enter' && event.target.classList.contains('media_obj')) {
+    // transférer la data-id à la lightbox
+    const mediaClicked = event.target;
+    const mediaDataId = mediaClicked.getAttribute('data-id');
+    mediaImage.setAttribute('data-id', mediaDataId);
+
+    const mediaPath = event.target.src;
+    console.log(mediaDataId);
+    openLightbox(mediaDataId, mediaPath, mediaPath);
+
+    mediaImage.src = mediaPath;
+  }
+});
 
 mediaContainer.addEventListener('click', (event) => {
   if (event.target.classList.contains('media_obj')) {
@@ -220,43 +263,78 @@ export function displayName() {
 function getPhotographerFolderPath(photographerName) {
   const basePath = 'assets/images/';
   const sanitizedFolderName = photographerName.split(' ')[0];
-  const pathPhotographer = `${basePath}${sanitizedFolderName}/`;
+  const newFoldername = sanitizedFolderName.replace('-', ' ');
+  const pathPhotographer = `${basePath}${newFoldername}/`;
   return pathPhotographer;
 }
 
-lightboxCloseBtn.addEventListener('click', closeLightbox);
+emClose.addEventListener('click', closeLightbox);
 
 const currentMediaIndex = 0; // Index du média actuellement affiché dans la lightbox
 
 // bloquer à la dernière image et ne pas revenir en arrière au premier élémment si je clique sur next au dernier éléméent
-async function showNextMedia(nextIndex, mediaFolder) {
+async function showNextMedia(nextIndex, nextIndex, mediaFolder) {
   const currentDataId = parseInt(mediaImage.getAttribute('data-id'), 10);
   nextIndex = currentDataId + 1;
 
   // Vérifie si l'index suivant dépasse la limite supérieure du tableau
+  // si on tente d'aller après le tableau
   if (nextIndex >= photographerMedia.length) {
+    emNext.style.color = "#901c1c48";
     return;
+    // si on tente d'aller avant le tableau 
+  } else if (nextIndex < photographerMedia.length) {
+    console.log(nextIndex);
+    emNext.style.color = "#901C1C";
+    // si on est à la fois avant la fin du tableau et après le début du tableau
+  } else if (nextIndex < photographerMedia.length && nextIndex >= 0) {
+    emNext.style.color = "#901C1C";
   }
+
+
 
   const nextMedia = photographerMedia[nextIndex];
   const data = await fetchData();
   const photographerId = getPhotographerIdFromUrl();
   const photographer = getPhotographerById(data, photographerId);
-  mediaFolder = getPhotographerFolderPath(photographer.name);
-  const mediaSrc = mediaFolder + nextMedia.image;
-  console.log(mediaSrc);
-  mediaImage.src = mediaSrc;
 
-  mediaImage.setAttribute('data-id', nextIndex);
+  mediaFolder = getPhotographerFolderPath(photographer.name);
+  let mediaSrc = '';
+  mediaTitle = nextMedia.title;
+
+  if (nextMedia.image) {
+    mediaVideo.style.display = 'none';
+    mediaImage.style.display = 'block';
+    mediaSrc = mediaFolder + nextMedia.image;
+    console.log('imageShowNext');
+    mediaImage.src = mediaSrc;
+    mediaImage.setAttribute('data-id', nextIndex);
+  } else {
+    mediaImage.style.display = 'none';
+    mediaVideo.style.display = 'block';
+    mediaSrc = mediaFolder + nextMedia.video;
+    mediaVideo.src = mediaSrc;
+    mediaVideo.setAttribute('data-id', nextIndex);
+    console.log('videoShowNext');
+  }
+
+  console.log(mediaSrc);
 }
 
-async function showPrevMedia(prevIndex, mediaFolder) {
+async function showPrevMedia(prevIndex, nextIndex, mediaFolder) {
   const currentDataId = parseInt(mediaImage.getAttribute('data-id'), 10);
   prevIndex = currentDataId - 1;
 
   // Vérifie si l'index précédent est inférieur à 0
-  if (prevIndex < 0) {
+  if (prevIndex <= 0) {
+    emPrev.style.color = "#901c1c48";
     return;
+  } else if (nextIndex < photographerMedia.length) {
+    console.log(nextIndex);
+    emPrev.style.color = "#901C1C";
+    // si on est à la fois avant la fin du tableau et après le début du tableau
+  } else if (nextIndex < photographerMedia.length && nextIndex >= 0) {
+    emPrev.style.color = "#901C1C";
   }
 
   const prevMedia = photographerMedia[prevIndex];
@@ -264,12 +342,25 @@ async function showPrevMedia(prevIndex, mediaFolder) {
   const photographerId = getPhotographerIdFromUrl();
   const photographer = getPhotographerById(data, photographerId);
   mediaFolder = getPhotographerFolderPath(photographer.name);
+  let mediaSrc = '';
+  let videoSrc = '';
 
-  const mediaSrc = mediaFolder + prevMedia.image;
-  console.log(mediaSrc);
-
-  mediaImage.src = mediaSrc;
-  mediaImage.setAttribute('data-id', prevIndex);
+  mediaTitle = prevMedia.title;
+  if (prevMedia.image) {
+    mediaSrc = mediaFolder + prevMedia.image;
+    mediaImage.src = mediaSrc;
+    mediaImage.setAttribute('data-id', prevIndex);
+    console.log(mediaSrc);
+    mediaVideo.style.display = 'none';
+    mediaImage.style.display = 'block';
+  } else {
+    mediaVideo.style.display = 'block';
+    videoSrc = mediaFolder + prevMedia.video;
+    mediaVideo.src = videoSrc;
+    mediaVideo.setAttribute('data-id', prevIndex);
+    console.log(videoSrc);
+    mediaImage.style.display = 'none';
+  }
 }
 
 function displayMediaInLightbox(lightboxIndex, mediaFolder) {
@@ -279,27 +370,50 @@ function displayMediaInLightbox(lightboxIndex, mediaFolder) {
   const prevIndex = lightboxIndex--;
 
   const prevMedia = photographerMedia[prevIndex];
-  const prevMediaSrc = mediaFolder + prevMedia.image;
+  if (prevMedia.image) {
+    mediaImage.style.display = 'block';
+    mediaVideo.style.display = 'none';
+    const prevMediaSrc = mediaFolder + prevMedia.image;
+  } else {
+    mediaImage.style.display = 'none';
+    mediaVideo.style.display = 'block';
+    const prevMediaSrc = mediaFolder + prevMedia.video;
+  }
 
   const nextMedia = photographerMedia[nextIndex];
-  const nextMediaSrc = mediaFolder + nextMedia.image;
+  if (nextMedia.image) {
+    mediaImage.style.display = 'block';
+    mediaVideo.style.display = 'none';
+    const nextMediaSrc = mediaFolder + nextMedia.image;
+  } else {
+    mediaImage.style.display = 'none';
+    mediaVideo.style.display = 'block';
+    const nextMediaSrc = mediaFolder + nextMedia.video;
+  }
 
-  // gestionnaires d'événements pour le clavier
-  lightboxPrevBtn.addEventListener('keydown', (event) => {
-    if (event.code === 'Enter') {
-      showPrevMedia(prevMediaSrc, mediaFolder);
-    }
-  });
-  lightboxNextBtn.addEventListener('keydown', (event) => {
-    if (event.code === 'Enter') {
-      showNextMedia(nextMediaSrc, mediaFolder);
-    }
-  });
 }
 
+emClose.addEventListener('keydown', (event) => {
+  if (event.code === 'Enter') {
+    closeLightbox();
+  }
+});
+
+emPrev.addEventListener('keydown', (event) => {
+  if (event.code === 'Enter') {
+    showPrevMedia();
+  }
+});
+
+emNext.addEventListener('keydown', (event) => {
+  if (event.code === 'Enter') {
+    showNextMedia();
+  }
+});
+
 // quand on appuie sur next ou prev lancer showNext ou showPrev
-lightboxNextBtn.addEventListener('click', showNextMedia);
-lightboxPrevBtn.addEventListener('click', showPrevMedia);
+emNext.addEventListener('click', showNextMedia);
+emPrev.addEventListener('click', showPrevMedia);
 
 // Fonction qui initialise les autres fonctions
 async function init() {
