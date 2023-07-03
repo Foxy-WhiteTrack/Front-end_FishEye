@@ -12,7 +12,7 @@ const emClose = document.querySelector('#emClose');
 const emPrev = document.querySelector('#emPrev');
 const emNext = document.querySelector('#emNext');
 
-let mediaTitle = document.querySelector('#lightbox_media_title');
+const mediaTitle = document.querySelector('#lightbox_media_title');
 
 let lightboxIsOpen = false;
 
@@ -191,6 +191,9 @@ async function openLightbox(mediaDataId, mediaSrc) {
   const photographer = getPhotographerById(data, photographerId);
   const mediaFolder = getPhotographerFolderPath(photographer.name);
 
+  const currentMedia = photographerMedia[currentDataId];
+  mediaTitle.innerHTML = currentMedia.title;
+
   displayMediaInLightbox(currentDataId, mediaFolder);
 
   lightbox.setAttribute('aria-hidden', 'false');
@@ -220,7 +223,7 @@ function closeLightbox() {
   emPrev.setAttribute('tabindex', '-1');
   emNext.setAttribute('tabindex', '-1');
 
-  document.getElementById('contact_button').focus();
+  const contact = document.querySelector('.contact_button').focus();
 
   lightbox.setAttribute('aria-hidden', 'true');
   lightbox.setAttribute('tabindex', '-1');
@@ -283,13 +286,15 @@ async function showNextMedia(nextIndex, mediaFolder) {
   }
 
   const nextMedia = photographerMedia[nextIndex];
+  mediaTitle.innerHTML = nextMedia.title;
+  const currentMedia = photographerMedia[currentDataId];
   const data = await fetchData();
   const photographerId = getPhotographerIdFromUrl();
   const photographer = getPhotographerById(data, photographerId);
 
   mediaFolder = getPhotographerFolderPath(photographer.name);
   let mediaSrc = '';
-  mediaTitle = nextMedia.title;
+
 
   if (nextMedia.image) {
     mediaVideo.style.display = 'none';
@@ -339,6 +344,7 @@ async function showPrevMedia(prevIndex, mediaFolder) {
   }
 
   const prevMedia = photographerMedia[prevIndex];
+  mediaTitle.innerHTML = prevMedia.title;
   const data = await fetchData();
   const photographerId = getPhotographerIdFromUrl();
   const photographer = getPhotographerById(data, photographerId);
@@ -346,7 +352,7 @@ async function showPrevMedia(prevIndex, mediaFolder) {
   let mediaSrc = '';
   let videoSrc = '';
 
-  mediaTitle = prevMedia.title;
+
   if (prevMedia.image) {
     mediaSrc = mediaFolder + prevMedia.image;
     mediaImage.src = mediaSrc;
@@ -372,6 +378,7 @@ function displayMediaInLightbox(lightboxIndex, mediaFolder) {
   const prevIndex = lightboxIndex--;
 
   const prevMedia = photographerMedia[prevIndex];
+
   if (prevMedia.image) {
     mediaImage.style.display = 'block';
     mediaVideo.style.display = 'none';

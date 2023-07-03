@@ -458,17 +458,17 @@ canvas {
 }
 
 #lightbox_next {
-    right: 0;
+    right: 12%;
     left: auto;
 }
 
 #lightbox_prev {
     right: auto;
-    left: 0;
+    left: 12%;
 }
 
 #lightbox_close {
-    right: 0;
+    right: 12%;
     left: auto;
     display: flex;
     flex-direction: column;

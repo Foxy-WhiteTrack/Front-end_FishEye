@@ -14,7 +14,7 @@ export function mediaFactory(item, mediaFolder, index) {
           <div class="likes">
             <h3>${item.likes}</h3>
             <div>
-              <i id="like_${item.id}" tabindex="0" class="fa-regular fa-heart" aria-label="likes" role="button"></i >
+              <em id="like_${item.id}" tabindex="0" class="fa-regular fa-heart" aria-label="likes" role="button"></em >
             </div>
           </div>
         </div>
@@ -35,7 +35,7 @@ export function mediaFactory(item, mediaFolder, index) {
           <div class="likes">
             <h3>${item.likes}</h3>
             <div>
-              <i id="like_${item.id}" tabindex="0" class="fa-regular fa-heart" aria-label="likes" role="button"></i >
+              <em id="like_${item.id}" tabindex="0" class="fa-regular fa-heart" aria-label="likes" role="button"></em >
             </div>
           </div>
         </div>

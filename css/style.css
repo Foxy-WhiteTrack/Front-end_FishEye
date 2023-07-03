@@ -23,7 +23,8 @@ header {
 h1 {
     color: #901C1C;
     margin-right: 100px;
-    font-size: 2rem;
+    font-size: 36px;
+    font-weight: 400;
 }
 
 h2 {
@@ -59,24 +60,25 @@ h2 {
     color: #D3573C;
     font-size: 36px;
     margin-bottom: 0;
+    font-weight: 400;
 }
 
-.photographer_section article p:nth-child(1) {
+.photographer_section article h3 {
     color: #901C1C;
-    font-size: 22px;
+    font-size: 13px;
     font-weight: 400;
     margin: 0 0 3px 0;
 }
 
 .photographer_section article p:nth-child(2) {
-    font-size: 17px;
+    font-size: 10px;
+    font-weight: 400;
     margin: 0 0 3px 0;
 }
 
 .photographer_section article p:nth-child(3) {
     color: #757575;
-    font-size: 16px;
-    font-weight: 400;
+    font-size: 12px;
     margin: 0 0 3px 0;
 }
 
