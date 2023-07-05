@@ -23,8 +23,6 @@ const errDivLast = document.querySelector('#error-last');
 const errDivEmail = document.querySelector('#error-email');
 const errDivMess = document.querySelector('#error-message');
 
-const modalElements = document.querySelectorAll('.form-item');
-
 const namesForm = /^[a-zA-Z\u00C0-\u017F\- ]+$/;
 
 const emailForm = /^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/;

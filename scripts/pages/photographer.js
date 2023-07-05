@@ -268,8 +268,7 @@ emClose.addEventListener('click', closeLightbox);
 
 const currentMediaIndex = 0; // Index du média actuellement affiché dans la lightbox
 
-/* bloquer à la dernière image et ne pas revenir en arrière 
-au premier élémment si je clique sur next au dernier éléméent */
+// bloquer à la dernière image et ne pas revenir en arrière au premier élémment si je clique sur next au dernier éléméent
 async function showNextMedia(nextIndex, mediaFolder) {
   const currentDataId = parseInt(mediaImage.getAttribute('data-id'), 10);
   nextIndex = currentDataId + 1;
@@ -313,7 +312,7 @@ function colorArrow() {
   } else {
     emPrev.style.color = '#901C1C';
   }
-  if (currentDataId === photographerMedia.length - 1) {
+  if (currentDataId == photographerMedia.length - 1) {
     emNext.style.color = '#901c1c48';
   } else {
     emNext.style.color = '#901C1C';
@@ -349,6 +348,7 @@ async function showPrevMedia(prevIndex, mediaFolder) {
     videoSrc = mediaFolder + prevMedia.video;
     mediaVideo.src = videoSrc;
     mediaVideo.setAttribute('data-id', prevIndex);
+
     mediaImage.style.display = 'none';
   }
   colorArrow();
@@ -357,25 +357,30 @@ async function showPrevMedia(prevIndex, mediaFolder) {
 function displayMediaInLightbox(lightboxIndex, mediaFolder) {
   // lister les media dans un tableau
 
-  const nextIndex = lightboxIndex + 1;
-  const prevIndex = lightboxIndex - 1;
+  const nextIndex = lightboxIndex++;
+  const prevIndex = lightboxIndex--;
+
   const prevMedia = photographerMedia[prevIndex];
 
   if (prevMedia.image) {
     mediaImage.style.display = 'block';
     mediaVideo.style.display = 'none';
+    const prevMediaSrc = mediaFolder + prevMedia.image;
   } else {
     mediaImage.style.display = 'none';
     mediaVideo.style.display = 'block';
+    const prevMediaSrc = mediaFolder + prevMedia.video;
   }
 
   const nextMedia = photographerMedia[nextIndex];
   if (nextMedia.image) {
     mediaImage.style.display = 'block';
     mediaVideo.style.display = 'none';
+    const nextMediaSrc = mediaFolder + nextMedia.image;
   } else {
     mediaImage.style.display = 'none';
     mediaVideo.style.display = 'block';
+    const nextMediaSrc = mediaFolder + nextMedia.video;
   }
 }
 
