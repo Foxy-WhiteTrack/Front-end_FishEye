@@ -1,8 +1,5 @@
 const formCtn = document.getElementById('form-ctn');
-const panel = document.getElementById('contact_modal');
 const background = document.getElementById('bg-panel');
-
-const close = document.querySelector('.close');
 
 // Variables éléments formulaire
 const form = document.querySelector('#form');
@@ -30,10 +27,10 @@ const modalElements = document.querySelectorAll('.form-item');
 
 const namesForm = /^[a-zA-Z\u00C0-\u017F\- ]+$/;
 
-const emailForm = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+const emailForm = /^\w+([-]?\w+)*@\w+([-]?\w+)*(\.\w{2,3})+$/;
 
 // tableau des erreurs dédiée
-dataError = {
+const dataError = {
   empty: 'Merci de remplir ce champ',
   name: 'Veuillez entrer 2 caractères ou plus pour le champ du prénom',
   last: 'Veuillez entrer 2 caractères ou plus pour le champ du nom',

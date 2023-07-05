@@ -112,8 +112,6 @@ function sortMedia(media) {
 function displayMedia(photographer, media) {
   // variable qui contient les media triés
   const mediaSort = sortMedia(media);
-  // console.log("mediaSort =");
-  // console.log(mediaSort[3]);
 
   let mediaHtml = '';
 
@@ -135,7 +133,6 @@ function displayMedia(photographer, media) {
   // gestionnaire d'événement à chaque cœur
   media.forEach((item) => {
     const indexElement = item;
-    // console.log(indexElement);
 
     const likeIcon = document.getElementById(`like_${item.id}`);
     let isClicked = false;
@@ -210,7 +207,6 @@ async function openLightbox(mediaDataId, mediaSrc) {
 }
 
 function closeLightbox() {
-  console.log('close!');
   // Masque la lightbox
   lightboxIsOpen = false;
   checkLighboxIsOpen();
@@ -236,7 +232,6 @@ mediaContainer.addEventListener('keydown', (event) => {
     mediaImage.setAttribute('data-id', mediaDataId);
 
     const mediaPath = event.target.src;
-    console.log(mediaDataId);
     openLightbox(mediaDataId, mediaPath, mediaPath);
 
     mediaImage.src = mediaPath;
@@ -251,7 +246,6 @@ mediaContainer.addEventListener('click', (event) => {
     mediaImage.setAttribute('data-id', mediaDataId);
 
     const mediaPath = event.target.src;
-    console.log(mediaDataId);
     openLightbox(mediaDataId, mediaPath, mediaPath);
 
     mediaImage.src = mediaPath;
@@ -274,7 +268,8 @@ emClose.addEventListener('click', closeLightbox);
 
 const currentMediaIndex = 0; // Index du média actuellement affiché dans la lightbox
 
-// bloquer à la dernière image et ne pas revenir en arrière au premier élémment si je clique sur next au dernier éléméent
+/* bloquer à la dernière image et ne pas revenir en arrière 
+au premier élémment si je clique sur next au dernier éléméent */
 async function showNextMedia(nextIndex, mediaFolder) {
   const currentDataId = parseInt(mediaImage.getAttribute('data-id'), 10);
   nextIndex = currentDataId + 1;
@@ -298,7 +293,6 @@ async function showNextMedia(nextIndex, mediaFolder) {
     mediaVideo.style.display = 'none';
     mediaImage.style.display = 'block';
     mediaSrc = mediaFolder + nextMedia.image;
-    console.log('imageShowNext');
     mediaImage.src = mediaSrc;
     mediaImage.setAttribute('data-id', nextIndex);
   } else {
@@ -307,24 +301,19 @@ async function showNextMedia(nextIndex, mediaFolder) {
     mediaSrc = mediaFolder + nextMedia.video;
     mediaVideo.src = mediaSrc;
     mediaVideo.setAttribute('data-id', nextIndex);
-    console.log('videoShowNext');
   }
 
-  console.log(mediaSrc);
   colorArrow();
 }
 
 function colorArrow() {
   const currentDataId = parseInt(mediaImage.getAttribute('data-id'), 10);
-  console.log(currentDataId);
   if (currentDataId <= 1) {
-    console.log('plus petit que 1');
     emPrev.style.color = '#901c1c48';
   } else {
     emPrev.style.color = '#901C1C';
   }
-  if (currentDataId == photographerMedia.length - 1) {
-    console.log('plus grand que le tableau');
+  if (currentDataId === photographerMedia.length - 1) {
     emNext.style.color = '#901c1c48';
   } else {
     emNext.style.color = '#901C1C';
@@ -353,7 +342,6 @@ async function showPrevMedia(prevIndex, mediaFolder) {
     mediaSrc = mediaFolder + prevMedia.image;
     mediaImage.src = mediaSrc;
     mediaImage.setAttribute('data-id', prevIndex);
-    console.log(mediaSrc);
     mediaVideo.style.display = 'none';
     mediaImage.style.display = 'block';
   } else {
@@ -361,7 +349,6 @@ async function showPrevMedia(prevIndex, mediaFolder) {
     videoSrc = mediaFolder + prevMedia.video;
     mediaVideo.src = videoSrc;
     mediaVideo.setAttribute('data-id', prevIndex);
-    console.log(videoSrc);
     mediaImage.style.display = 'none';
   }
   colorArrow();
