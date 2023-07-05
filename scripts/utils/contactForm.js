@@ -20,6 +20,12 @@ let errorOnLast;
 let errorOnEmail;
 let errorOnMess;
 
+// Variables pour error
+const errDivFirst = document.querySelector('#error-first');
+const errDivLast = document.querySelector('#error-last');
+const errDivEmail = document.querySelector('#error-email');
+const errDivMess = document.querySelector('#error-message');
+
 const modalElements = document.querySelectorAll('.form-item');
 
 const namesForm = /^[a-zA-Z\u00C0-\u017F\- ]+$/;
@@ -119,12 +125,6 @@ function createErrorMessage(field, message) {
   error.classList.add('error-message');
   error.innerHTML = message;
 }
-
-// Variables pour error
-const errDivFirst = document.querySelector('#error-first');
-const errDivLast = document.querySelector('#error-last');
-const errDivEmail = document.querySelector('#error-email');
-const errDivMess = document.querySelector('#error-message');
 
 // fonction pour checker le prénom
 function firstNameCheck() {

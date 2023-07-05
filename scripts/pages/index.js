@@ -31,7 +31,6 @@ function displayData(photographers) {
 
 async function init() {
   const result = await getPhotographers();
-  console.log(result);
 
   if (result.error) {
     displayError(result.message);

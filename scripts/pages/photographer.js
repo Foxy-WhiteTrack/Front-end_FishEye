@@ -80,6 +80,7 @@ function displayTotalLikes(media, photographer) {
   document.querySelector('#price').textContent = `${price} € / jour`;
 }
 
+// fonction pour trier les media
 function sortMedia(media) {
   // récupérer la valeur du select
   const sortSelect = document.getElementById('sort-select');
@@ -109,6 +110,7 @@ function sortMedia(media) {
 
 // Fonction pour afficher les médias du photographe (mettre le tri d'entrée)
 function displayMedia(photographer, media) {
+  // variable qui contient les media triés
   const mediaSort = sortMedia(media);
   // console.log("mediaSort =");
   // console.log(mediaSort[3]);
@@ -198,7 +200,6 @@ async function openLightbox(mediaDataId, mediaSrc) {
 
   lightbox.setAttribute('aria-hidden', 'false');
 
-
   emClose.setAttribute('aria-label', 'Fermer');
   emPrev.setAttribute('aria-label', 'Image précédente');
   emNext.setAttribute('aria-label', 'Image suivante');
@@ -206,12 +207,10 @@ async function openLightbox(mediaDataId, mediaSrc) {
   emPrev.setAttribute('tabindex', '1');
   emNext.setAttribute('tabindex', '1');
   emPrev.focus();
-
 }
 
 function closeLightbox() {
-
-  console.log("close!");
+  console.log('close!');
   // Masque la lightbox
   lightboxIsOpen = false;
   checkLighboxIsOpen();
@@ -295,7 +294,6 @@ async function showNextMedia(nextIndex, mediaFolder) {
   mediaFolder = getPhotographerFolderPath(photographer.name);
   let mediaSrc = '';
 
-
   if (nextMedia.image) {
     mediaVideo.style.display = 'none';
     mediaImage.style.display = 'block';
@@ -320,18 +318,17 @@ function colorArrow() {
   const currentDataId = parseInt(mediaImage.getAttribute('data-id'), 10);
   console.log(currentDataId);
   if (currentDataId <= 1) {
-    console.log("plus petit que 1");
-    emPrev.style.color = "#901c1c48";
+    console.log('plus petit que 1');
+    emPrev.style.color = '#901c1c48';
   } else {
-    emPrev.style.color = "#901C1C";
+    emPrev.style.color = '#901C1C';
   }
   if (currentDataId == photographerMedia.length - 1) {
-    console.log("plus grand que le tableau");
-    emNext.style.color = "#901c1c48";
+    console.log('plus grand que le tableau');
+    emNext.style.color = '#901c1c48';
   } else {
-    emNext.style.color = "#901C1C";
+    emNext.style.color = '#901C1C';
   }
-
 }
 
 async function showPrevMedia(prevIndex, mediaFolder) {
@@ -351,7 +348,6 @@ async function showPrevMedia(prevIndex, mediaFolder) {
   mediaFolder = getPhotographerFolderPath(photographer.name);
   let mediaSrc = '';
   let videoSrc = '';
-
 
   if (prevMedia.image) {
     mediaSrc = mediaFolder + prevMedia.image;
@@ -399,7 +395,6 @@ function displayMediaInLightbox(lightboxIndex, mediaFolder) {
     mediaVideo.style.display = 'block';
     const nextMediaSrc = mediaFolder + nextMedia.video;
   }
-
 }
 
 emClose.addEventListener('keydown', (event) => {
