@@ -181,6 +181,10 @@ form textarea {
 
 }
 
+#filter label {
+    color: transparent;
+}
+
 #filter p {
     margin-bottom: 0;
     font-weight: 700;

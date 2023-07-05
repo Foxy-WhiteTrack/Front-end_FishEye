@@ -43,4 +43,5 @@ export function mediaFactory(item, mediaFolder, index) {
     </article>`;
     return mediaHtml;
   }
+  return '';
 }

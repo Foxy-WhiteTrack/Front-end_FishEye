@@ -36,12 +36,17 @@
     <div id="filter">
       <p>Trier par</p>
       <div class="custom-select" style="width:200px;">
+        <label for="sort-select">Trier par :</label>
         <select id="sort-select" aria-label="Trier par">
           <option value="0" tabindex="0">Popularité</option>
+          <option disabled="disabled">────────</option>
           <option value="1" tabindex="0">Date</option>
+          <option disabled="disabled">────────</option>
           <option value="2" tabindex="0">Titre</option>
         </select>
+        <div class="custom-select-style"></div>
       </div>
+
     </div>
 
     <div id="media_container">

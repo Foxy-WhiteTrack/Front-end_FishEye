@@ -37,6 +37,19 @@ dataError = {
   lname: 'le format du nom n\'est pas valide',
 };
 
+function reset() {
+  form.reset();
+  errorOnFirst = true;
+  errorOnLast = true;
+  errorOnEmail = true;
+  errorOnMess = true;
+
+  errDivFirst.style.display = 'none';
+  errDivLast.style.display = 'none';
+  errDivEmail.style.display = 'none';
+  errDivMess.style.display = 'none';
+}
+
 // Fonction pour activer l'ordre de tabulation personnalisé de la modal
 function enableModalTabOrder() {
   const modalElements = document.querySelectorAll('.form-item');
@@ -174,7 +187,10 @@ function messCheck() {
 
 // Fonction pour valider les entrées
 function validation() {
-  if (errorOnFirst == false && errorOnLast == false && errorOnEmail == false && errorOnMess == false) {
+  if (errorOnFirst === false
+    && errorOnLast === false
+    && errorOnEmail === false
+    && errorOnMess === false) {
     form.style.display = 'none';
 
     console.log('Prénom:', firstName.value.trim());
@@ -197,19 +213,6 @@ function check() {
   messCheck();
 
   validation();
-}
-
-function reset() {
-  form.reset();
-  errorOnFirst = true;
-  errorOnLast = true;
-  errorOnEmail = true;
-  errorOnMess = true;
-
-  errDivFirst.style.display = 'none';
-  errDivLast.style.display = 'none';
-  errDivEmail.style.display = 'none';
-  errDivMess.style.display = 'none';
 }
 
 // écouter le bouton submit et lancer la fonction check au clic
