@@ -357,30 +357,25 @@ async function showPrevMedia(prevIndex, mediaFolder) {
 function displayMediaInLightbox(lightboxIndex, mediaFolder) {
   // lister les media dans un tableau
 
-  const nextIndex = lightboxIndex++;
-  const prevIndex = lightboxIndex--;
-
+  const nextIndex = lightboxIndex + 1;
+  const prevIndex = lightboxIndex - 1;
   const prevMedia = photographerMedia[prevIndex];
 
   if (prevMedia.image) {
     mediaImage.style.display = 'block';
     mediaVideo.style.display = 'none';
-    const prevMediaSrc = mediaFolder + prevMedia.image;
   } else {
     mediaImage.style.display = 'none';
     mediaVideo.style.display = 'block';
-    const prevMediaSrc = mediaFolder + prevMedia.video;
   }
 
   const nextMedia = photographerMedia[nextIndex];
   if (nextMedia.image) {
     mediaImage.style.display = 'block';
     mediaVideo.style.display = 'none';
-    const nextMediaSrc = mediaFolder + nextMedia.image;
   } else {
     mediaImage.style.display = 'none';
     mediaVideo.style.display = 'block';
-    const nextMediaSrc = mediaFolder + nextMedia.video;
   }
 }
 

@@ -69,11 +69,6 @@ function restoreDefaultTabOrder() {
   });
 }
 
-function createThanks() {
-  const formPanel = document.getElementById('form-panel');
-  formPanel.style.display = 'block';
-}
-
 function deleteForm() {
   document.body.classList.remove('modal-open');
 
@@ -115,13 +110,6 @@ const closeImg = document.querySelector('#closeImg').addEventListener('keydown',
     deleteForm();
   }
 });
-
-function createErrorMessage(field, message) {
-  const error = document.createElement('div');
-  field.classList.add('error');
-  error.classList.add('error-message');
-  error.innerHTML = message;
-}
 
 // fonction pour checker le prénom
 function firstNameCheck() {
