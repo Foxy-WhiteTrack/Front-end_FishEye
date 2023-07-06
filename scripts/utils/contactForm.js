@@ -11,6 +11,9 @@ const message = document.querySelector('#message');
 
 const main = document.querySelector('#main');
 
+const contactBtn = document.querySelector('#contactBtn');
+const closeBtn = document.querySelector('#closeImg');
+
 // Variables globales d'erreurs
 let errorOnFirst;
 let errorOnLast;
@@ -96,6 +99,9 @@ function createForm() {
   closeImg.focus();
 }
 
+contactBtn.addEventListener('click', createForm);
+closeBtn.addEventListener('click', deleteForm);
+
 function handleKeyDown(event) {
   if (event.key === 'Escape') {
     deleteForm();
@@ -103,7 +109,7 @@ function handleKeyDown(event) {
 }
 window.addEventListener('keydown', handleKeyDown);
 
-const closeImg = document.querySelector('#closeImg').addEventListener('keydown', (event) => {
+document.querySelector('#closeImg').addEventListener('keydown', (event) => {
   if (event.key === 'Enter') {
     deleteForm();
   }

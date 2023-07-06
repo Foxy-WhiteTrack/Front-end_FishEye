@@ -1,5 +1,5 @@
 // proriété du photographer
-function photographerFactory(data) {
+export function photographerFactory(data) {
   const {
     id, name, portrait, tagline, city, country, price,
   } = data;

@@ -24,7 +24,7 @@
         <p></p>
       </div>
       <div>
-        <button class="contact_button" onclick="createForm()" aria-label="Contactez-moi">Contactez-moi</button>
+        <button class="contact_button" id="contactBtn" aria-label="Contactez-moi">Contactez-moi</button>
       </div>
       <div id="container_img">
         <div id="img_photograph">
@@ -77,7 +77,7 @@
             </div>
             <div>
               <img src="assets/icons/close.svg" id="closeImg" alt="fermeture du formulaire de contact"
-                class="close form-item" onclick="deleteForm()" tabindex="0" aria-label="Fermer" />
+                class="close form-item" tabindex="0" aria-label="Fermer" />
             </div>
           </div>
 
@@ -146,7 +146,10 @@
     </div>
   </div>
 
-  <script type="module" src="/scripts/pages/photographer.js"></script>
+  <script src="/scripts/factories/media-factory.js" type="module"></script>
+  <script src="/scripts/factories/photographer.js" type="module"></script>
+  <script src="/scripts/pages/photographer.js" type="module"></script>
+
   <script src="/scripts/utils/contactForm.js"></script>
 </body>
 

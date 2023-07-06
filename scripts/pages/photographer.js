@@ -3,7 +3,6 @@ import { mediaFactory } from '../factories/media-factory.js';
 const namePhographe = document.querySelector('#namePhotograph');
 
 const lightbox = document.getElementById('lightbox');
-const lightboxContainer = document.getElementById('lightbox_container');
 const mediaContainer = document.querySelector('#media_container');
 const mediaImage = document.querySelector('#lightbox_image');
 const mediaVideo = document.querySelector('#lightbox_video');
@@ -64,7 +63,9 @@ function displayPhotographerInfo(photographer) {
   document.querySelector('#img_photograph').innerHTML = `<img src="assets/images/Photographers ID Photos/${photo}" alt="Photo du profil de ${name}">`;
 }
 
-// Fonction pour vérifier si l'ID du photographe existe (met tous les photograpes dans un array et utilise some() pour tester s'il existe ou pas)
+// Fonction pour vérifier si l'ID du photographe existe
+// (met tous les photograpes dans un array et utilise some()
+// pour tester s'il existe ou pas)
 function checkPhotographerId(data, id) {
   const { photographers } = data;
   // vérifie si au moins un des tableau passe le test
@@ -115,7 +116,9 @@ function displayMedia(photographer, media) {
 
   let mediaHtml = '';
 
-  // item est l'élément et index l'index dans le tableau qui permettra ensuite de pécho l'index et de le mettre dans data-id
+  // item est l'élément et index l'index dans le
+  // tableau qui permettra ensuite de pécho l'index
+  // et de le mettre dans data-id
   mediaSort.forEach((item, index) => {
     const firstName = photographer.name.split(' ')[0];
     const newFirstName = firstName.replace('-', ' ');
@@ -132,7 +135,6 @@ function displayMedia(photographer, media) {
 
   // gestionnaire d'événement à chaque cœur
   media.forEach((item) => {
-    const indexElement = item;
 
     const likeIcon = document.getElementById(`like_${item.id}`);
     let isClicked = false;
@@ -162,6 +164,7 @@ function displayMedia(photographer, media) {
       }
     };
 
+
     // gestionnaires d'événements pour le clavier
     likeIcon.addEventListener('keydown', (event) => {
       if (event.code === 'Enter') {
@@ -178,34 +181,6 @@ function displayMedia(photographer, media) {
   });
 }
 
-async function openLightbox(mediaDataId, mediaSrc) {
-  lightboxIsOpen = true;
-  checkLighboxIsOpen();
-
-  const currentDataId = mediaDataId;
-  mediaImage.src = mediaSrc;
-
-  const photographerId = getPhotographerIdFromUrl();
-  const data = await fetchData();
-  const photographer = getPhotographerById(data, photographerId);
-  const mediaFolder = getPhotographerFolderPath(photographer.name);
-
-  const currentMedia = photographerMedia[currentDataId];
-  mediaTitle.innerHTML = currentMedia.title;
-
-  displayMediaInLightbox(currentDataId, mediaFolder);
-
-  lightbox.setAttribute('aria-hidden', 'false');
-
-  emClose.setAttribute('aria-label', 'Fermer');
-  emPrev.setAttribute('aria-label', 'Image précédente');
-  emNext.setAttribute('aria-label', 'Image suivante');
-  emClose.setAttribute('tabindex', '1');
-  emPrev.setAttribute('tabindex', '1');
-  emNext.setAttribute('tabindex', '1');
-  emPrev.focus();
-}
-
 function closeLightbox() {
   // Masque la lightbox
   lightboxIsOpen = false;
@@ -218,7 +193,7 @@ function closeLightbox() {
   emPrev.setAttribute('tabindex', '-1');
   emNext.setAttribute('tabindex', '-1');
 
-  const contact = document.querySelector('.contact_button').focus();
+  document.querySelector('.contact_button').focus();
 
   lightbox.setAttribute('aria-hidden', 'true');
   lightbox.setAttribute('tabindex', '-1');
@@ -252,10 +227,6 @@ mediaContainer.addEventListener('click', (event) => {
   }
 });
 
-export function displayName() {
-  document.querySelector('#name-photographe').innerHTML = photographer.name;
-}
-
 function getPhotographerFolderPath(photographerName) {
   const basePath = 'assets/images/';
   const sanitizedFolderName = photographerName.split(' ')[0];
@@ -264,11 +235,24 @@ function getPhotographerFolderPath(photographerName) {
   return pathPhotographer;
 }
 
+function colorArrow() {
+  const currentDataId = parseInt(mediaImage.getAttribute('data-id'), 10);
+  if (currentDataId <= 1) {
+    emPrev.style.color = '#901c1c48';
+  } else {
+    emPrev.style.color = '#901C1C';
+  }
+  if (currentDataId === photographerMedia.length - 1) {
+    emNext.style.color = '#901c1c48';
+  } else {
+    emNext.style.color = '#901C1C';
+  }
+}
+
 emClose.addEventListener('click', closeLightbox);
 
-const currentMediaIndex = 0; // Index du média actuellement affiché dans la lightbox
-
-// bloquer à la dernière image et ne pas revenir en arrière au premier élémment si je clique sur next au dernier éléméent
+/* bloquer à la dernière image et ne pas revenir en
+arrière au premier élémment si je clique sur next au dernier élément */
 async function showNextMedia(nextIndex, mediaFolder) {
   const currentDataId = parseInt(mediaImage.getAttribute('data-id'), 10);
   nextIndex = currentDataId + 1;
@@ -280,7 +264,7 @@ async function showNextMedia(nextIndex, mediaFolder) {
 
   const nextMedia = photographerMedia[nextIndex];
   mediaTitle.innerHTML = nextMedia.title;
-  const currentMedia = photographerMedia[currentDataId];
+
   const data = await fetchData();
   const photographerId = getPhotographerIdFromUrl();
   const photographer = getPhotographerById(data, photographerId);
@@ -303,20 +287,6 @@ async function showNextMedia(nextIndex, mediaFolder) {
   }
 
   colorArrow();
-}
-
-function colorArrow() {
-  const currentDataId = parseInt(mediaImage.getAttribute('data-id'), 10);
-  if (currentDataId <= 1) {
-    emPrev.style.color = '#901c1c48';
-  } else {
-    emPrev.style.color = '#901C1C';
-  }
-  if (currentDataId == photographerMedia.length - 1) {
-    emNext.style.color = '#901c1c48';
-  } else {
-    emNext.style.color = '#901C1C';
-  }
 }
 
 async function showPrevMedia(prevIndex, mediaFolder) {
@@ -354,34 +324,53 @@ async function showPrevMedia(prevIndex, mediaFolder) {
   colorArrow();
 }
 
-function displayMediaInLightbox(lightboxIndex, mediaFolder) {
+function displayMediaInLightbox(lightboxIndex) {
   // lister les media dans un tableau
 
-  const nextIndex = lightboxIndex++;
-  const prevIndex = lightboxIndex--;
+  const nextIndex = lightboxIndex + 1;
+  const prevIndex = lightboxIndex - 1;
 
   const prevMedia = photographerMedia[prevIndex];
 
   if (prevMedia.image) {
     mediaImage.style.display = 'block';
     mediaVideo.style.display = 'none';
-    const prevMediaSrc = mediaFolder + prevMedia.image;
   } else {
     mediaImage.style.display = 'none';
     mediaVideo.style.display = 'block';
-    const prevMediaSrc = mediaFolder + prevMedia.video;
   }
 
   const nextMedia = photographerMedia[nextIndex];
   if (nextMedia.image) {
     mediaImage.style.display = 'block';
     mediaVideo.style.display = 'none';
-    const nextMediaSrc = mediaFolder + nextMedia.image;
   } else {
     mediaImage.style.display = 'none';
     mediaVideo.style.display = 'block';
-    const nextMediaSrc = mediaFolder + nextMedia.video;
   }
+}
+
+async function openLightbox(mediaDataId, mediaSrc) {
+  lightboxIsOpen = true;
+  checkLighboxIsOpen();
+
+  const currentDataId = mediaDataId;
+  mediaImage.src = mediaSrc;
+
+  const currentMedia = photographerMedia[currentDataId];
+  mediaTitle.innerHTML = currentMedia.title;
+
+  displayMediaInLightbox(currentDataId);
+
+  lightbox.setAttribute('aria-hidden', 'false');
+
+  emClose.setAttribute('aria-label', 'Fermer');
+  emPrev.setAttribute('aria-label', 'Image précédente');
+  emNext.setAttribute('aria-label', 'Image suivante');
+  emClose.setAttribute('tabindex', '1');
+  emPrev.setAttribute('tabindex', '1');
+  emNext.setAttribute('tabindex', '1');
+  emPrev.focus();
 }
 
 emClose.addEventListener('keydown', (event) => {
