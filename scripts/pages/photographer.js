@@ -15,6 +15,7 @@ const mediaTitle = document.querySelector('#lightbox_media_title');
 
 let lightboxIsOpen = false;
 
+// Vérifier si la lightbox est ouverte ou pas
 function checkLighboxIsOpen() {
   if (lightboxIsOpen) {
     lightbox.style.display = 'block';
@@ -164,8 +165,7 @@ function displayMedia(photographer, media) {
       }
     };
 
-
-    // gestionnaires d'événements pour le clavier
+    // gestionnaires d'événements du like pour le clavier
     likeIcon.addEventListener('keydown', (event) => {
       if (event.code === 'Enter') {
         handleLikeClick();
@@ -181,8 +181,8 @@ function displayMedia(photographer, media) {
   });
 }
 
+// Fermer la lightbox
 function closeLightbox() {
-  // Masque la lightbox
   lightboxIsOpen = false;
   checkLighboxIsOpen();
 
@@ -193,40 +193,37 @@ function closeLightbox() {
   emPrev.setAttribute('tabindex', '-1');
   emNext.setAttribute('tabindex', '-1');
 
-  // document.querySelector('.contact_button').focus();
-
   lightbox.setAttribute('aria-hidden', 'true');
   lightbox.setAttribute('tabindex', '-1');
 }
 
+// fonction pour transférer les datas du media
+function transfertMediaData() {
+  // transferrer la data-id à la lightbox
+  const mediaClicked = event.target;
+  const mediaDataId = mediaClicked.getAttribute('data-id');
+  mediaImage.setAttribute('data-id', mediaDataId);
+
+  const mediaPath = event.target.src;
+  openLightbox(mediaDataId, mediaPath, mediaPath);
+
+  mediaImage.src = mediaPath;
+}
+
+// écouteur d'event sur les media de la galerie clavier
 mediaContainer.addEventListener('keydown', (event) => {
   if (event.code === 'Enter' && event.target.classList.contains('media_obj')) {
-    // transférer la data-id à la lightbox
-    const mediaClicked = event.target;
-    const mediaDataId = mediaClicked.getAttribute('data-id');
-    mediaImage.setAttribute('data-id', mediaDataId);
-
-    const mediaPath = event.target.src;
-    openLightbox(mediaDataId, mediaPath, mediaPath);
-
-    mediaImage.src = mediaPath;
+    transfertMediaData();
   }
 });
-
+// écouteur d'event sur les media de la galerie souris
 mediaContainer.addEventListener('click', (event) => {
   if (event.target.classList.contains('media_obj')) {
-    // transferrer la data-id à la lightbox
-    const mediaClicked = event.target;
-    const mediaDataId = mediaClicked.getAttribute('data-id');
-    mediaImage.setAttribute('data-id', mediaDataId);
-
-    const mediaPath = event.target.src;
-    openLightbox(mediaDataId, mediaPath, mediaPath);
-
-    mediaImage.src = mediaPath;
+    transfertMediaData();
   }
 });
 
+// récupération du dossier correspondant au photographe
 function getPhotographerFolderPath(photographerName) {
   const basePath = 'assets/images/';
   const sanitizedFolderName = photographerName.split(' ')[0];
@@ -264,11 +261,12 @@ async function showNextMedia() {
   // mediaTitle.innerHTML = nextMedia.title;
 }
 
+// Voir le media précédent
 async function showPrevMedia() {
   const currentDataId = parseInt(mediaImage.getAttribute('data-id'), 10);
   const prevIndex = currentDataId - 1;
 
-  // Vérifie si l'index précédent est inférieur à 0
+  // l'index ne peut être en dessous de zéro
   if (prevIndex < 0) {
     return;
   }
@@ -288,6 +286,7 @@ async function showPrevMedia() {
   setMediaInLightbox(prevIndex, mediaSrc)
 }
 
+// faire en sorte que la lightbox s'adapte soit aux img soit aux video
 function adaptLightboxToMedia(lightboxIndex) {
   // lister les media dans un tableau
 
@@ -309,13 +308,12 @@ function setMediaInLightbox(mediaDataId, mediaSrc) {
   adaptLightboxToMedia(currentDataId);
 }
 
+// ouvrir la lightbox
 function openLightbox(mediaDataId, mediaSrc) {
   lightboxIsOpen = true;
   checkLighboxIsOpen();
 
   setMediaInLightbox(mediaDataId, mediaSrc);
-  // mediaImage.src = mediaSrc;
-  // mediaVideo.src = mediaSrc;
 
   lightbox.setAttribute('aria-hidden', 'false');
 
@@ -328,18 +326,17 @@ function openLightbox(mediaDataId, mediaSrc) {
   emPrev.focus();
 }
 
+// Les Events de la lightbox:
 emClose.addEventListener('keydown', (event) => {
   if (event.code === 'Enter') {
     closeLightbox();
   }
 });
-
 emPrev.addEventListener('keydown', (event) => {
   if (event.code === 'Enter') {
     showPrevMedia();
   }
 });
-
 emNext.addEventListener('keydown', (event) => {
   if (event.code === 'Enter') {
     showNextMedia();
